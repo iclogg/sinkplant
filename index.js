@@ -167,8 +167,6 @@ app.get("/api/logout/", (req, res) => {
 // ======================= Get User =======================//
 
 app.get("/api/user", (req, res) => {
-    console.log("req.session.userId", req.session.userId);
-
     db.getUserInfo(req.session.userId)
         .then((result) => {
             let userinfo = result.rows[0];
@@ -183,6 +181,48 @@ app.get("/api/user", (req, res) => {
         })
         .catch((err) => {
             "err in getUserInfo in /api/user: ", err;
+        });
+});
+// ======================= Get Users Groups =======================//
+
+app.get("/api/groups", (req, res) => {
+    console.log("/api/groups");
+    console.log("req.params", req.query.groupsNrs);
+
+    db.getUserGroups(req.query.groupsNrs, req.session.userId)
+        .then((result) => {
+            console.log("result.rows: ", result.rows);
+
+            res.json(result.rows);
+        })
+        .catch((err) => {
+            "err in getUserInfo in /api/groups ", err;
+        });
+});
+
+// ======================= Update Membership Status =======================//
+
+app.post("/api/updateMembership", (req, res) => {
+    let dbqery;
+    let newBtnText;
+
+    if (req.body.btnText == "Send Invite") {
+        dbqery = db.sendGroupInvite;
+        newBtnText = "Remove Member";
+    } else if (req.body.btnText == "Join Group") {
+        dbqery = db.acceptGroupInvite;
+        newBtnText = "Leave Group";
+    } else {
+        dbqery = db.deleteMembership;
+        newBtnText = "Send Invite";
+    }
+
+    dbqery(req.session.userId, req.body.idOther)
+        .then(() => {
+            res.json(newBtnText);
+        })
+        .catch((err) => {
+            console.log("err in dbqery in api/sendFriendStatus ", err);
         });
 });
 

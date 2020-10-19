@@ -5,7 +5,7 @@ const dbUrl =
 
 const db = spicedPg(dbUrl);
 
-/* =============== User in users =============== */
+/* =============== Login and Registration =============== */
 
 module.exports.addUser = (username, email, hashPw) => {
     const q = `
@@ -23,6 +23,8 @@ module.exports.getUser = (email) => {
     const params = [email];
     return db.query(q, params);
 };
+
+/* ============================== App gets user info ========================== */
 
 module.exports.getUserInfo = (id) => {
     const q = `
@@ -43,7 +45,52 @@ module.exports.getUserMemberships = (id) => {
         WHERE member_id = $1
         `;
     const params = [id];
-    console.log("id", id);
+    return db.query(q, params);
+};
 
+/* ============================== Groups gets group info ========================== */
+
+module.exports.getUserGroups = (groupsIds, userId) => {
+    const q = `
+        SELECT groups.id AS groups_id, creator, groups.created_at AS startdate, groupBio, groupname, accepted
+        FROM groups
+        LEFT JOIN memberships 
+        ON groups.id = memberships.group_id
+        WHERE groups.id = ANY($1) AND member_id = $2 
+        `;
+    const params = [groupsIds, userId];
+
+    return db.query(q, params);
+};
+
+/* ============================== Update membership status  ========================== */
+
+module.exports.sendGroupInvite = (group_id, member_id) => {
+    const q = `
+        INSERT into memberships (group_id, member_id) values($1, $2)
+        `;
+    const params = [group_id, member_id];
+    return db.query(q, params);
+};
+
+/* UPDATE - Accept Friend Request */
+
+module.exports.acceptGroupInvite = (group_id, member_id) => {
+    const q = `
+        UPDATE memberships SET accepted = true
+        WHERE group_id = $1 AND member_id = $2
+        `;
+    const params = [group_id, member_id];
+    return db.query(q, params);
+};
+
+/* DELETE - Cancel Friend Request or End Friendship */
+
+module.exports.deleteMembership = (group_id, member_id) => {
+    const q = `
+        DELETE FROM memberships
+        WHERE (group_id = $1 AND member_id = $2)
+        `;
+    const params = [group_id, member_id];
     return db.query(q, params);
 };
