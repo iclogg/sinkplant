@@ -1,0 +1,19 @@
+GROUPS
+INSERT into groups (groupname, creator, groupBio) values('idasgroup', 1, 'We are a great group.');
+INSERT into groups (groupname, creator, groupBio) values('dudesgroup', 2, 'We are a great group of dudes.');
+INSERT into groups (groupname, creator, groupBio) values('sarasgroup', 3, 'We are a great group saras.');
+INSERT into groups (groupname, creator, groupBio) values('hellasgroup', 1, 'We are a hella group saras.');
+
+
+
+MEMEBERSHIPS
+INSERT into memberships (group_id, member_id, accepted) values(4, 1, true);
+INSERT into memberships (group_id, member_id, accepted) values(1, 1, true);
+INSERT into memberships (group_id, member_id, accepted) values(2, 2, true);
+INSERT into memberships (group_id, member_id, accepted) values(3, 3, true);
+INSERT into memberships (group_id, member_id, accepted) values(2, 1, true);
+INSERT into memberships (group_id, member_id, accepted) values(3, 1, false);
+INSERT into memberships (group_id, member_id, accepted) values(2, 4, false);
+INSERT into memberships (group_id, member_id, accepted) values(3, 4, false);
+INSERT into memberships (group_id, member_id, accepted) values(1, 4, false);
+
