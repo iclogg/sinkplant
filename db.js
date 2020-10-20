@@ -181,3 +181,14 @@ module.exports.toggletaskdone = (task_id, done) => {
     const params = [task_id, !done];
     return db.query(q, params);
 };
+
+/* ============================== Task Adding ========================== */
+
+module.exports.adSubTask = (taskdescription, group_id, task_id) => {
+    const q = `
+        INSERT into subtasks (taskDescription, group_id, task_id)
+        values($1, $2, $3) RETURNING *
+        `;
+    const params = [taskdescription, group_id, task_id];
+    return db.query(q, params);
+};

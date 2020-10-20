@@ -318,7 +318,6 @@ app.post("/api/sendInvite", (req, res) => {
 
 app.post("/api/togglesubtaskdone", (req, res) => {
     console.log("/api/subtaskdone");
-    console.log("req.body.done", req.body.done);
 
     db.togglesubtaskdone(req.body.taskid, req.body.done)
         .then(() => {
@@ -330,14 +329,29 @@ app.post("/api/togglesubtaskdone", (req, res) => {
 });
 
 app.post("/api/toggletaskdone", (req, res) => {
-    console.log("/api/taskdone");
+    console.log("/api/toggletaskdone");
 
     db.toggletaskdone(req.body.taskid, req.body.done)
         .then(() => {
             // res.json(newBtnText);
         })
         .catch((err) => {
-            console.log("err in dbqery in api/taskdone ", err);
+            console.log("err in dbqery in api/toggletaskdone ", err);
+        });
+});
+
+// ====================================== Task Adding  ======================================//
+app.post("/api/adSubTask/", (req, res) => {
+    console.log("/api/adSubTask");
+
+    db.adSubTask(req.body.taskdescription, req.body.group_id, req.body.task_id)
+        .then((result) => {
+            console.log("result.rows[0]in adSubTask", result.rows[0]);
+
+            // res.json(newBtnText);
+        })
+        .catch((err) => {
+            console.log("err in dbqery in api/adSubTask ", err);
         });
 });
 
