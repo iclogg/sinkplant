@@ -17,22 +17,24 @@
     groupBio TEXT
 );
 
-    CREATE TABLE tasks (
-    id SERIAL PRIMARY KEY,
-    group_id VARCHAR NOT NULL REFERENCES groups(id), 
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    title VARCHAR(10) NOT NULL
-    taskDescription TEXT,
-    current_user INT REFERENCES users(id)
-
     /* reset frequency? */
     /* done bolean? prob not*/
+
+
+    CREATE TABLE tasks (
+    id SERIAL PRIMARY KEY,
+    group_id INT NOT NULL REFERENCES groups(id), 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    title VARCHAR(10) NOT NULL,
+    taskDescription VARCHAR(255),
+    assigned_user INT
 );
+
 
     CREATE TABLE subtasks (
     id SERIAL PRIMARY KEY,
-    group_id VARCHAR NOT NULL REFERENCES groups(id),
-    task_id VARCHAR NOT NULL REFERENCES tasks(id)
+    group_id INT NOT NULL REFERENCES groups(id),
+    task_id INT NOT NULL REFERENCES tasks(id)
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     taskDescription TEXT
     done BOOLEAN DEFAULT false

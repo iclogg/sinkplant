@@ -5,6 +5,7 @@ import { adCurrentUser } from "./actions";
 
 /* components */
 import Groups from "./groups.js";
+import GroupPage from "./groupspage.js";
 
 export default function App() {
     const dispatch = useDispatch();
@@ -15,8 +16,8 @@ export default function App() {
 
     return (
         <BrowserRouter>
-            <h1>You are logged in</h1>
             <Route exact path="/groups" render={() => <Groups />} />
+            <Route exact path="/groups/:groupId" render={() => <GroupPage />} />
         </BrowserRouter>
     );
 }

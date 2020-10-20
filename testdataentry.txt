@@ -7,13 +7,53 @@ INSERT into groups (groupname, creator, groupBio) values('hellasgroup', 1, 'We a
 
 
 MEMEBERSHIPS
-INSERT into memberships (group_id, member_id, accepted) values(4, 1, true);
-INSERT into memberships (group_id, member_id, accepted) values(1, 1, true);
-INSERT into memberships (group_id, member_id, accepted) values(2, 2, true);
-INSERT into memberships (group_id, member_id, accepted) values(3, 3, true);
-INSERT into memberships (group_id, member_id, accepted) values(2, 1, true);
+
+drop table memberships;
+
+CREATE TABLE memberships (
+    id SERIAL PRIMARY KEY,
+    group_id INT NOT NULL REFERENCES groups(id),
+    member_id INT REFERENCES users(id) NOT NULL, 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    accepted BOOLEAN DEFAULT false
+);
+
+
+INSERT into memberships (group_id, member_id, accepted) values(4, 1, false);
+INSERT into memberships (group_id, member_id, accepted) values(1, 1, false);
+INSERT into memberships (group_id, member_id, accepted) values(2, 2, false);
+INSERT into memberships (group_id, member_id, accepted) values(3, 3, false);
+INSERT into memberships (group_id, member_id, accepted) values(2, 1, false);
 INSERT into memberships (group_id, member_id, accepted) values(3, 1, false);
 INSERT into memberships (group_id, member_id, accepted) values(2, 4, false);
 INSERT into memberships (group_id, member_id, accepted) values(3, 4, false);
 INSERT into memberships (group_id, member_id, accepted) values(1, 4, false);
+
+drop table tasks;
+
+
+TASKS
+INSERT into tasks (group_id,title, taskDescription ) values(1,'Bathroom', 'Clean the bathroom.' );
+INSERT into tasks (group_id,title, taskDescription ) values(1,'Kitchen', 'Clean the kitchen.' );
+INSERT into tasks (group_id,title, taskDescription ) values(1,'Floor + Hallway', 'Clean the Floor + Hallway.' );
+INSERT into tasks (group_id,title, taskDescription ) values(1,'Laundry', 'Clean and replace kitchen and bathroom towels.' );
+INSERT into tasks (group_id,title, taskDescription ) values(1,'Surfaces', 'Dust and wipe' );
+INSERT into tasks (group_id,title, taskDescription ) values(1,'Cat', 'Brush the cat' );
+
+
+SUBTASKS
+
+drop table sub tasks;
+
+
+INSERT into subtasks (group_id, task_id, taskDescription ) values(1, 1, 'Sink' );
+INSERT into subtasks (group_id, task_id, taskDescription ) values(1, 1, 'Tub' );
+INSERT into subtasks (group_id, task_id, taskDescription ) values(1, 1, 'Floor' );
+INSERT into subtasks (group_id, task_id, taskDescription ) values(1, 1, 'Mirrors' );
+
+INSERT into subtasks (group_id, task_id, taskDescription ) values(1, 2, 'Take out trash' );
+INSERT into subtasks (group_id, task_id, taskDescription ) values(1, 2, 'Whipe all srufaces' );
+INSERT into subtasks (group_id, task_id, taskDescription ) values(1, 2, 'De-chalk the waterboilder' );
+
+
 

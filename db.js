@@ -63,7 +63,74 @@ module.exports.getUserGroups = (groupsIds, userId) => {
     return db.query(q, params);
 };
 
+/* ============================== Gets group detailed info ========================== */
+module.exports.getGroup = (group_id) => {
+    const q = `
+        SELECT *
+        FROM groups
+        WHERE id = $1
+        `;
+    const params = [group_id];
+
+    return db.query(q, params);
+};
+
+module.exports.getTasks = (group_id) => {
+    const q = `
+        SELECT *
+        FROM tasks
+        WHERE group_id = $1
+        `;
+    const params = [group_id];
+
+    return db.query(q, params);
+};
+
+module.exports.getSubTasks = (group_id) => {
+    const q = `
+        SELECT *
+        FROM subtasks
+        WHERE group_id = $1
+        `;
+    const params = [group_id];
+
+    return db.query(q, params);
+};
+
+module.exports.getMemberships = (group_id) => {
+    const q = `
+        SELECT *
+        FROM memberships
+        WHERE group_id = $1
+        `;
+    const params = [group_id];
+
+    return db.query(q, params);
+};
+
+module.exports.getMembers = (users_id_arr) => {
+    const q = `
+        SELECT username, id AS user_id, email, created_at, profileUrl
+        FROM users
+        WHERE id = ANY($1)
+
+        `;
+    const params = [users_id_arr];
+
+    return db.query(q, params);
+};
+
 /* ============================== Update membership status  ========================== */
+
+module.exports.getUserInfoViaEmail = (email) => {
+    const q = `
+        SELECT email, username, id AS user_id, profileurl
+        FROM users 
+        WHERE email = $1
+        `;
+    const params = [email];
+    return db.query(q, params);
+};
 
 module.exports.sendGroupInvite = (group_id, member_id) => {
     const q = `
@@ -76,6 +143,12 @@ module.exports.sendGroupInvite = (group_id, member_id) => {
 /* UPDATE - Accept Friend Request */
 
 module.exports.acceptGroupInvite = (group_id, member_id) => {
+    console.log(
+        "module.exports.acceptGroupInvite -> group_id, member_id",
+        group_id,
+        member_id
+    );
+
     const q = `
         UPDATE memberships SET accepted = true
         WHERE group_id = $1 AND member_id = $2

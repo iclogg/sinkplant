@@ -187,11 +187,10 @@ app.get("/api/user", (req, res) => {
 
 app.get("/api/groups", (req, res) => {
     console.log("/api/groups");
-    console.log("req.params", req.query.groupsNrs);
 
     db.getUserGroups(req.query.groupsNrs, req.session.userId)
         .then((result) => {
-            console.log("result.rows: ", result.rows);
+            console.log("/api/groups result.rows: ", result.rows);
 
             res.json(result.rows);
         })
@@ -200,29 +199,121 @@ app.get("/api/groups", (req, res) => {
         });
 });
 
+// ======================= Get Group =======================//
+app.get("/api/grouppage", (req, res) => {
+    console.log("/api/grouppage");
+    db.getGroup(req.query.groupid)
+        .then((result) => {
+            let group = result.rows[0];
+            console.log("/api/grouppage result.rows: ", group);
+            // res.json(result.rows);
+            db.getTasks(req.query.groupid)
+                .then((tasksArr) => {
+                    group.tasks = tasksArr.rows;
+                    console.log("/api/grouppage result.rows: ", group);
+                    // res.json(result.rows);
+                    db.getSubTasks(req.query.groupid)
+                        .then((subTasksArr) => {
+                            for (let i = 0; i < group.tasks.length; i++) {
+                                group.tasks[i].subtasks = [];
+                                for (
+                                    let j = 0;
+                                    j < subTasksArr.rows.length;
+                                    j++
+                                ) {
+                                    if (
+                                        group.tasks[i].id ==
+                                        subTasksArr.rows[j].task_id
+                                    ) {
+                                        group.tasks[i].subtasks.push(
+                                            subTasksArr.rows[j]
+                                        );
+                                    }
+                                }
+                            }
+
+                            res.json(group);
+                        })
+                        .catch((err) => {
+                            "err in getSubTasks in /api/grouppage ", err;
+                        });
+                })
+                .catch((err) => {
+                    "err in getTasks in /api/grouppage ", err;
+                });
+        })
+        .catch((err) => {
+            "err in getGroup in /api/grouppage ", err;
+        });
+});
+
+// ======================= Get Members of Group =======================//
+
+app.get("/api/groupmembers", (req, res) => {
+    console.log("/api/groupmembers");
+
+    db.getUserGroups(req.query.groupid)
+        .then((result) => {
+            console.log("/api/groupmembersoups result.rows: ", result.rows);
+            db.getMembers()
+                .then((result) => {
+                    res.json(result.rows);
+                })
+                .catch((err) => {
+                    "err in getMembers in /api/groupmembers ", err;
+                });
+        })
+        .catch((err) => {
+            "err in getUserGroups in /api/groupmembers ", err;
+        });
+});
+
 // ======================= Update Membership Status =======================//
 
 app.post("/api/updateMembership", (req, res) => {
+    console.log("req", req.body.btnText);
+    console.log("/api/updateMembership");
+
     let dbqery;
     let newBtnText;
 
-    if (req.body.btnText == "Send Invite") {
-        dbqery = db.sendGroupInvite;
-        newBtnText = "Remove Member";
-    } else if (req.body.btnText == "Join Group") {
+    if (req.body.btnText == "Join Group") {
         dbqery = db.acceptGroupInvite;
         newBtnText = "Leave Group";
-    } else {
+    } else if (req.body.btnText == "Delete Membership") {
         dbqery = db.deleteMembership;
         newBtnText = "Send Invite";
     }
 
-    dbqery(req.session.userId, req.body.idOther)
+    dbqery(req.body.idGroup, req.session.userId)
         .then(() => {
             res.json(newBtnText);
         })
         .catch((err) => {
             console.log("err in dbqery in api/sendFriendStatus ", err);
+        });
+});
+
+app.post("/api/sendInvite", (req, res) => {
+    console.log("req", req.body);
+    console.log("/api/sendInvite");
+
+    db.getUserInfoViaEmail(req.body.inviteEmail)
+        .then((result) => {
+            console.log();
+            db.sendGroupInvite(req.body.groupId, result.rows[0].user_id)
+                .then(() => {
+                    res.json();
+                })
+                .catch((err) => {
+                    console.log(
+                        "err in sendGroupInvite in api/sendInvite ",
+                        err
+                    );
+                });
+        })
+        .catch((err) => {
+            console.log("err in getUserInfoViaEmail in api/sendInvite ", err);
         });
 });
 
