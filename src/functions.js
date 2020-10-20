@@ -28,13 +28,31 @@ export async function getMembers(groupid) {
     }
 }
 
-export async function markDone(subtaskid, typetask) {
+export async function markDone(taskid, typetask, done) {
+    console.log("markDone -> done", done);
+
     try {
         const { data } = await axios.post(`/api/${typetask}/`, {
-            subtaskid,
+            taskid,
+            done,
         });
         return data;
     } catch (err) {
         console.log(err);
     }
 }
+
+export async function adSubTask(taskdescription, group_id, task_id) {
+    try {
+        const { data } = await axios.post(`/api/adSubTask/`, {
+            taskdescription,
+            group_id,
+            task_id,
+        });
+        return data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+/* newTask, task.group_id, task.id */

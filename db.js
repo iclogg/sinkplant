@@ -164,20 +164,20 @@ module.exports.deleteMembership = (group_id, member_id) => {
 
 /* ============================== Update tasks status  ========================== */
 
-module.exports.subtasks = (task_id) => {
+module.exports.togglesubtaskdone = (task_id, done) => {
     const q = `
-        UPDATE subtasks SET done = true
+        UPDATE subtasks SET done = $2
         WHERE id = $1
         `;
-    const params = [task_id];
+    const params = [task_id, !done];
     return db.query(q, params);
 };
 
-module.exports.taskdone = (task_id) => {
+module.exports.toggletaskdone = (task_id, done) => {
     const q = `
-        UPDATE tasks SET done = true
+        UPDATE tasks SET done = $2
         WHERE id = $1 
         `;
-    const params = [task_id];
+    const params = [task_id, !done];
     return db.query(q, params);
 };

@@ -316,9 +316,11 @@ app.post("/api/sendInvite", (req, res) => {
 
 // ====================================== Task Statuses ======================================//
 
-app.post("/api/subtaskdone", (req, res) => {
+app.post("/api/togglesubtaskdone", (req, res) => {
     console.log("/api/subtaskdone");
-    db.subtaskdone(req.body.taskid)
+    console.log("req.body.done", req.body.done);
+
+    db.togglesubtaskdone(req.body.taskid, req.body.done)
         .then(() => {
             // res.json(newBtnText);
         })
@@ -327,9 +329,10 @@ app.post("/api/subtaskdone", (req, res) => {
         });
 });
 
-app.post("/api/taskdone", (req, res) => {
+app.post("/api/toggletaskdone", (req, res) => {
     console.log("/api/taskdone");
-    db.subtaskdone(req.body.taskid)
+
+    db.toggletaskdone(req.body.taskid, req.body.done)
         .then(() => {
             // res.json(newBtnText);
         })
