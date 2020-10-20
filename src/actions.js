@@ -32,8 +32,8 @@ export async function receiveGroups(groupsNrs) {
 // ======================= Update Membership Status =======================//
 
 /* later on individual group page*/
-export async function sendGroupInvite(idGroup) {
-    const btnText = "Send Invite";
+/* export async function sendGroupInvite(idGroup) {
+    const btnText = "Accept Friend Request";
     try {
         const { data } = await axios.post(`/api/updateMembership/`, {
             btnText,
@@ -47,7 +47,7 @@ export async function sendGroupInvite(idGroup) {
     } catch (err) {
         console.log(err);
     }
-}
+} */
 
 export async function acceptGroupInvite(idGroup) {
     const btnText = "Join Group";

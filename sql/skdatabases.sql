@@ -27,16 +27,17 @@
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     title VARCHAR(10) NOT NULL,
     taskDescription VARCHAR(255),
-    assigned_user INT
+    assigned_user INT,
+    done BOOLEAN DEFAULT false
 );
 
 
     CREATE TABLE subtasks (
     id SERIAL PRIMARY KEY,
     group_id INT NOT NULL REFERENCES groups(id),
-    task_id INT NOT NULL REFERENCES tasks(id)
+    task_id INT NOT NULL REFERENCES tasks(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    taskDescription TEXT
+    taskDescription TEXT,
     done BOOLEAN DEFAULT false
 );
 

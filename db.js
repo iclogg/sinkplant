@@ -101,7 +101,7 @@ module.exports.getMemberships = (group_id) => {
     const q = `
         SELECT *
         FROM memberships
-        WHERE group_id = $1
+        WHERE group_id = $1 AND accepted = true
         `;
     const params = [group_id];
 
@@ -143,12 +143,6 @@ module.exports.sendGroupInvite = (group_id, member_id) => {
 /* UPDATE - Accept Friend Request */
 
 module.exports.acceptGroupInvite = (group_id, member_id) => {
-    console.log(
-        "module.exports.acceptGroupInvite -> group_id, member_id",
-        group_id,
-        member_id
-    );
-
     const q = `
         UPDATE memberships SET accepted = true
         WHERE group_id = $1 AND member_id = $2
@@ -165,5 +159,25 @@ module.exports.deleteMembership = (group_id, member_id) => {
         WHERE (group_id = $1 AND member_id = $2)
         `;
     const params = [group_id, member_id];
+    return db.query(q, params);
+};
+
+/* ============================== Update tasks status  ========================== */
+
+module.exports.subtasks = (task_id) => {
+    const q = `
+        UPDATE subtasks SET done = true
+        WHERE id = $1
+        `;
+    const params = [task_id];
+    return db.query(q, params);
+};
+
+module.exports.taskdone = (task_id) => {
+    const q = `
+        UPDATE tasks SET done = true
+        WHERE id = $1 
+        `;
+    const params = [task_id];
     return db.query(q, params);
 };

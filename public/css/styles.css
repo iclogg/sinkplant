@@ -1,0 +1,11 @@
+main {
+    background-color: lightcyan;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.sub {
+    display: inline;
+}

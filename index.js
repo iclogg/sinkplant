@@ -205,13 +205,9 @@ app.get("/api/grouppage", (req, res) => {
     db.getGroup(req.query.groupid)
         .then((result) => {
             let group = result.rows[0];
-            console.log("/api/grouppage result.rows: ", group);
-            // res.json(result.rows);
             db.getTasks(req.query.groupid)
                 .then((tasksArr) => {
                     group.tasks = tasksArr.rows;
-                    console.log("/api/grouppage result.rows: ", group);
-                    // res.json(result.rows);
                     db.getSubTasks(req.query.groupid)
                         .then((subTasksArr) => {
                             for (let i = 0; i < group.tasks.length; i++) {
@@ -252,10 +248,13 @@ app.get("/api/grouppage", (req, res) => {
 app.get("/api/groupmembers", (req, res) => {
     console.log("/api/groupmembers");
 
-    db.getUserGroups(req.query.groupid)
+    db.getMemberships(req.query.groupid)
         .then((result) => {
-            console.log("/api/groupmembersoups result.rows: ", result.rows);
-            db.getMembers()
+            let memberIds = [];
+            for (let i = 0; i < result.rows.length; i++) {
+                memberIds.push(result.rows[i].member_id);
+            }
+            db.getMembers(memberIds)
                 .then((result) => {
                     res.json(result.rows);
                 })
@@ -264,14 +263,13 @@ app.get("/api/groupmembers", (req, res) => {
                 });
         })
         .catch((err) => {
-            "err in getUserGroups in /api/groupmembers ", err;
+            "err in getMemberships in /api/groupmembers ", err;
         });
 });
 
 // ======================= Update Membership Status =======================//
 
 app.post("/api/updateMembership", (req, res) => {
-    console.log("req", req.body.btnText);
     console.log("/api/updateMembership");
 
     let dbqery;
@@ -295,7 +293,6 @@ app.post("/api/updateMembership", (req, res) => {
 });
 
 app.post("/api/sendInvite", (req, res) => {
-    console.log("req", req.body);
     console.log("/api/sendInvite");
 
     db.getUserInfoViaEmail(req.body.inviteEmail)
@@ -314,6 +311,30 @@ app.post("/api/sendInvite", (req, res) => {
         })
         .catch((err) => {
             console.log("err in getUserInfoViaEmail in api/sendInvite ", err);
+        });
+});
+
+// ====================================== Task Statuses ======================================//
+
+app.post("/api/subtaskdone", (req, res) => {
+    console.log("/api/subtaskdone");
+    db.subtaskdone(req.body.taskid)
+        .then(() => {
+            // res.json(newBtnText);
+        })
+        .catch((err) => {
+            console.log("err in dbqery in api/subtaskdone ", err);
+        });
+});
+
+app.post("/api/taskdone", (req, res) => {
+    console.log("/api/taskdone");
+    db.subtaskdone(req.body.taskid)
+        .then(() => {
+            // res.json(newBtnText);
+        })
+        .catch((err) => {
+            console.log("err in dbqery in api/taskdone ", err);
         });
 });
 
