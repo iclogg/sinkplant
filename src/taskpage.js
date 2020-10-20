@@ -5,12 +5,15 @@ import { markDone, adSubTask } from "./functions.js";
 
 export default function TaskPage({ taskArr }) {
     let task = taskArr[0];
-    console.log("TaskPage -> task", task);
-
     const [newTask, setNewTask] = useState({});
+    const [taskState, setTaskState] = useState({});
+
     const handleChange = (e) => {
         setNewTask(e.target.value);
     };
+    useEffect(() => {
+        setTaskState(task);
+    }, []);
 
     return (
         <div className="task-detail">
@@ -49,7 +52,14 @@ export default function TaskPage({ taskArr }) {
                     onChange={(e) => handleChange(e)}
                 />
                 <button
-                    onClick={() => adSubTask(newTask, task.group_id, task.id)}
+                    onClick={async () => {
+                        setTaskState(
+                            taskState.subtasks.push(
+                                await adSubTask(newTask, task.group_id, task.id)
+                            )
+                        );
+                        console.log(task.subtasks);
+                    }}
                 >
                     Add Task
                 </button>

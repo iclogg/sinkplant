@@ -49,10 +49,10 @@ export async function adSubTask(taskdescription, group_id, task_id) {
             group_id,
             task_id,
         });
+        console.log("adSubTask -> data", data);
+
         return data;
     } catch (err) {
         console.log(err);
     }
 }
-
-/* newTask, task.group_id, task.id */

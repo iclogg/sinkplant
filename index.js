@@ -347,8 +347,7 @@ app.post("/api/adSubTask/", (req, res) => {
     db.adSubTask(req.body.taskdescription, req.body.group_id, req.body.task_id)
         .then((result) => {
             console.log("result.rows[0]in adSubTask", result.rows[0]);
-
-            // res.json(newBtnText);
+            res.json(result.rows[0]);
         })
         .catch((err) => {
             console.log("err in dbqery in api/adSubTask ", err);
