@@ -43,8 +43,6 @@ export async function markDone(taskid, typetask, done) {
 }
 
 export async function adSubTask(taskdescription, group_id, task_id) {
-    console.log(taskdescription);
-
     try {
         const { data } = await axios.post(`/api/adSubTask/`, {
             taskdescription,
@@ -114,5 +112,50 @@ export async function getCurrentWeeks(groupid) {
         return data;
     } catch (err) {
         console.log(err);
+    }
+}
+
+export async function assignTask(member_id, groupId, assigntask, weekassign) {
+    console.log(
+        "assignTask -> member_id, groupId, assigntask, weekassign",
+        member_id,
+        groupId,
+        assigntask,
+        weekassign
+    );
+    try {
+        const { data } = await axios.post("/api/assigntask", {
+            member_id,
+            groupId,
+            assigntask,
+            weekassign,
+        });
+        console.log("currentassignments in functions: ", data);
+
+        return data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function repeatGroupAssignment(
+    member_id_arr,
+    groupId,
+    nr_of_weeks,
+    start_week,
+    task_id
+) {
+    let weekArr = [];
+    while (nr_of_weeks > 0) {
+        weekArr.unshift(start_week + nr_of_weeks);
+        nr_of_weeks--;
+    }
+    weekArr.unshift(start_week);
+    while (member_id_arr.length < weekArr.length) {
+        member_id_arr.push(...member_id_arr);
+    }
+
+    for (let i = 0; i < nr_of_weeks.length; i++) {
+        await db.assignTask(member_id_arr[i], groupId, task_id, nr_of_weeks[i]);
     }
 }

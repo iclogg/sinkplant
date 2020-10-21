@@ -403,11 +403,29 @@ app.get("/api/currentassignments", (req, res) => {
 
     db.getCurrentWeeks(req.query.groupid)
         .then((result) => {
-            console.log(result.rows);
+            console.log("result.rows", result.rows);
             res.json(result.rows);
         })
         .catch((err) => {
             "err in getMemberships in /api/currentassignments ", err;
+        });
+});
+
+app.post("/api/assigntask/", (req, res) => {
+    console.log("/api/assigntask");
+
+    db.assignTask(
+        req.body.member_id,
+        req.body.groupId,
+        req.body.assigntask,
+        req.body.weekassign
+    )
+        .then((result) => {
+            console.log("result.rows[0]in assigntask", result.rows[0]);
+            res.json(result.rows[0]);
+        })
+        .catch((err) => {
+            console.log("err in dbqery in api/assigntask ", err);
         });
 });
 

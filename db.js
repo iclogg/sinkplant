@@ -241,8 +241,32 @@ module.exports.getCurrentWeeks = (group_id) => {
         WHERE week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP))
         OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) - 1 )
         OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 1 )
-        AND group_id = $1;
+        AND group_id = $1
+        ORDER BY id DESC;
         `;
     const params = [group_id];
+    return db.query(q, params);
+};
+
+module.exports.assignTask = (member_id, groupId, assigntask, weekassign) => {
+    const q = `
+        INSERT into assignment (user_id, group_id, task_id, week)
+        values($1, $2, $3, $4) RETURNING * 
+        `;
+    const params = [member_id, groupId, assigntask, weekassign];
+    return db.query(q, params);
+};
+
+module.exports.assignRepeatTask = (
+    member_id,
+    groupId,
+    assigntask,
+    nrweekassignfromnow
+) => {
+    const q = `
+        INSERT into assignment (user_id, group_id, task_id, (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + $4 ))
+        values($1, $2, $3, $4) RETURNING * 
+        `;
+    const params = [member_id, groupId, assigntask, weekassign];
     return db.query(q, params);
 };

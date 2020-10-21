@@ -2,7 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import { socket } from "./socket.js";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getGroup, getMembers, getCurrentWeeks } from "./functions.js";
+import {
+    getGroup,
+    getMembers,
+    getCurrentWeeks,
+    assignTask,
+} from "./functions.js";
 
 /* components */
 import Invite from "./invite.js";
@@ -99,34 +104,72 @@ export default function GroupPage() {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
                         if (assignments[i].user_id == members[j].user_id) {
+                            /*   setUserData({
+                                ...userData,
+                                [week]: members[j].username,
+                            }); */
                             return members[j].username;
                         }
                     }
                 }
             } else if (
                 week == "last" &&
-                assignments[i].this_week == assignments[i].week - 1
+                assignments[i].this_week - 1 == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
                         if (assignments[i].user_id == members[j].user_id) {
+                            /*   setUserData({
+                                ...userData,
+                                [week]: members[j].username,
+                            }); */
                             return members[j].username;
                         }
                     }
                 }
             } else if (
                 week == "next" &&
-                assignments[i].this_week == assignments[i].week + 1
+                assignments[i].this_week + 1 == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
                         if (assignments[i].user_id == members[j].user_id) {
+                            /* setUserData({
+                                ...userData,
+                                [week]: members[j].username,
+                            }) */
                             return members[j].username;
                         }
                     }
                 }
             }
         }
+    };
+
+    const handleNewAssignment = () => {
+        (async () => {
+            const { assigntask, assignmember, weekassign } = userData;
+            const member_id = members.filter(
+                (mem) => mem.username == assignmember
+            );
+            const task_id = group.tasks.filter(
+                (task) => task.title == assigntask
+            );
+
+            const newAssignment = await assignTask(
+                member_id[0].user_id,
+                groupId,
+                task_id[0].id,
+                weekassign
+            );
+            console.log("handleNewAssignment -> newAssignment", newAssignment);
+            setAssignments([...assignments, newAssignment]);
+            setUserData({
+                assignmember: null,
+                assigntask: null,
+                weekassign: null,
+            });
+        })(); // end async iffie
     };
 
     return (
@@ -150,9 +193,17 @@ export default function GroupPage() {
 
             <div className="tasks">
                 <div className="weeks">
-                    <p>Last Week </p>
-                    <p>This Week </p>
-                    <p>Next Week </p>
+                    <p>
+                        Last Week{" "}
+                        {assignments[0] && assignments[0].this_week - 1}{" "}
+                    </p>
+                    <p>
+                        This Week {assignments[0] && assignments[0].this_week}
+                    </p>
+                    <p>
+                        Next Week{" "}
+                        {assignments[0] && assignments[0].this_week + 1}
+                    </p>
                 </div>
                 {group.tasks &&
                     group.tasks.map((task) => {
@@ -174,6 +225,7 @@ export default function GroupPage() {
                                     type="option"
                                     name="last"
                                     value={checkIfAssigned(task.id, "last")}
+                                    onInput={(e) => handleChange(e)}
                                 />
                                 <input
                                     className={checkAllDone(task.id)}
@@ -181,6 +233,7 @@ export default function GroupPage() {
                                     type="option"
                                     name="now"
                                     value={checkIfAssigned(task.id, "now")}
+                                    onInput={(e) => handleChange(e)}
                                 />
                                 <input
                                     className="task-input"
@@ -188,6 +241,7 @@ export default function GroupPage() {
                                     type="option"
                                     name="next"
                                     value={checkIfAssigned(task.id, "next")}
+                                    onInput={(e) => handleChange(e)}
                                 />
                                 <datalist id="names">
                                     {members &&
@@ -203,6 +257,38 @@ export default function GroupPage() {
                             </div>
                         );
                     })}
+            </div>
+            <div className="assigntask">
+                <h5>Assign Task</h5>
+                <input
+                    className="task-input"
+                    list="names"
+                    type="option"
+                    name="assignmember"
+                    onInput={(e) => handleChange(e)}
+                />
+                <input
+                    name="weekassign"
+                    type="number"
+                    min="1"
+                    max="52"
+                    placeholder="week"
+                    onChange={(e) => handleChange(e)}
+                />
+                <input
+                    className="task-input"
+                    list="tasks"
+                    type="option"
+                    name="assigntask"
+                    onInput={(e) => handleChange(e)}
+                />
+                <datalist id="tasks">
+                    {group.tasks &&
+                        group.tasks.map((task) => {
+                            return <option value={task.title} key={task.id} />;
+                        })}
+                </datalist>
+                <button onClick={handleNewAssignment}>Assign</button>
             </div>
 
             <div className="adtask">
