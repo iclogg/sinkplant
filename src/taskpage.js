@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 
-import { markDone, adSubTask } from "./functions.js";
+import { markDone, adSubTask, deleteSubTask } from "./functions.js";
 
 export default function TaskPage({ taskArr }) {
     let task = taskArr[0];
@@ -17,11 +17,11 @@ export default function TaskPage({ taskArr }) {
 
     return (
         <div className="task-detail">
-            <h5>{task.title}</h5>
+            <h5>{taskState.title}</h5>
             {/* list of subtasks */}
             <div className="subtasks">
-                {task.subtasks &&
-                    task.subtasks.map((sub) => {
+                {taskState.subtasks &&
+                    taskState.subtasks.map((sub) => {
                         return (
                             <div className="task" key={sub.id}>
                                 <input
@@ -37,7 +37,20 @@ export default function TaskPage({ taskArr }) {
                                     defaultChecked={sub.done}
                                 />
 
-                                <p className="sub">{sub.taskdescription}</p>
+                                <p className="sub">{sub.taskdescription} </p>
+                                <i
+                                    className="fas fa-trash-alt"
+                                    onClick={() => {
+                                        deleteSubTask(sub.id);
+                                        setTaskState({
+                                            ...taskState,
+                                            subtasks: taskState.subtasks.filter(
+                                                (subtask) =>
+                                                    subtask.id != sub.id
+                                            ),
+                                        });
+                                    }}
+                                ></i>
                             </div>
                         );
                     })}
@@ -53,12 +66,17 @@ export default function TaskPage({ taskArr }) {
                 />
                 <button
                     onClick={async () => {
-                        setTaskState(
-                            taskState.subtasks.push(
-                                await adSubTask(newTask, task.group_id, task.id)
-                            )
-                        );
-                        console.log(task.subtasks);
+                        setTaskState({
+                            ...taskState,
+                            subtasks: [
+                                ...taskState.subtasks,
+                                await adSubTask(
+                                    newTask,
+                                    taskState.group_id,
+                                    taskState.id
+                                ),
+                            ],
+                        });
                     }}
                 >
                     Add Task

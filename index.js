@@ -354,6 +354,34 @@ app.post("/api/adSubTask/", (req, res) => {
         });
 });
 
+// ====================================== Task Removing  ======================================//
+
+app.post("/api/deleteSubTask/", (req, res) => {
+    console.log("/api/deleteSubTask");
+
+    db.deleteSubTask(req.body.task_id)
+        .then((result) => {
+            console.log("result.rows[0]in deleteSubTask", result.rows[0]);
+            res.json(result.rows[0]);
+        })
+        .catch((err) => {
+            console.log("err in dbqery in api/deleteSubTask ", err);
+        });
+});
+
+app.post("/api/deleteTask/", (req, res) => {
+    console.log("/api/deleteTask");
+
+    db.deleteTask(req.body.task_id)
+        .then((result) => {
+            console.log("result.rows[0]in deleteTask", result.rows[0]);
+            res.json(result.rows[0]);
+        })
+        .catch((err) => {
+            console.log("err in dbqery in api/deleteSubTask ", err);
+        });
+});
+
 // ======================= Star route. =======================//
 
 app.get("*", function (req, res) {

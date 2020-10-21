@@ -49,9 +49,34 @@ export async function adSubTask(taskdescription, group_id, task_id) {
             group_id,
             task_id,
         });
-        console.log("adSubTask -> data", data);
 
         return data;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function deleteSubTask(task_id) {
+    try {
+        const { data } = await axios.post(`/api/deleteSubTask/`, {
+            task_id,
+        });
+        console.log("subtasktask deleted");
+
+        return task_id;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function deleteTask(task_id) {
+    try {
+        const { data } = await axios.post(`/api/deleteTask/`, {
+            task_id,
+        });
+        console.log("task deleted");
+
+        return task_id;
     } catch (err) {
         console.log(err);
     }

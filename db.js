@@ -192,3 +192,32 @@ module.exports.adSubTask = (taskdescription, group_id, task_id) => {
     const params = [taskdescription, group_id, task_id];
     return db.query(q, params);
 };
+
+// ====================================== Task Removing  ======================================//
+
+module.exports.deleteSubTask = (task_id) => {
+    const q = `
+        DELETE FROM subtasks
+        WHERE id = $1 
+        `;
+    const params = [task_id];
+    return db.query(q, params);
+};
+
+module.exports.deleteAllSubTask = (parent_task_id) => {
+    const q = `
+        DELETE FROM subtasks
+        WHERE task_id = $1 
+        `;
+    const params = [parent_task_id];
+    return db.query(q, params);
+};
+
+module.exports.deleteTask = (task_id) => {
+    const q = `
+        DELETE FROM tasks
+        WHERE id = $1 
+        `;
+    const params = [task_id];
+    return db.query(q, params);
+};
