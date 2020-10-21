@@ -43,6 +43,8 @@ export async function markDone(taskid, typetask, done) {
 }
 
 export async function adSubTask(taskdescription, group_id, task_id) {
+    console.log(taskdescription);
+
     try {
         const { data } = await axios.post(`/api/adSubTask/`, {
             taskdescription,

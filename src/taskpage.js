@@ -5,7 +5,7 @@ import { markDone, adSubTask, deleteSubTask } from "./functions.js";
 
 export default function TaskPage({ taskArr }) {
     let task = taskArr[0];
-    const [newTask, setNewTask] = useState({});
+    const [newTask, setNewTask] = useState("");
     const [taskState, setTaskState] = useState({});
 
     const handleChange = (e) => {
@@ -63,6 +63,7 @@ export default function TaskPage({ taskArr }) {
                     type="text"
                     placeholder="short description"
                     onChange={(e) => handleChange(e)}
+                    value={newTask}
                 />
                 <button
                     onClick={async () => {
@@ -77,6 +78,7 @@ export default function TaskPage({ taskArr }) {
                                 ),
                             ],
                         });
+                        setNewTask("");
                     }}
                 >
                     Add Task
