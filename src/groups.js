@@ -92,13 +92,12 @@ export default function Groups() {
                                 className={`group ${group.newRequest}`}
                                 key={group.groups_id}
                             >
-                                <Link to={`/groups/${group.groups_id}`}>
-                                    <img
-                                        className="medium list "
-                                        src={group.profileurl}
-                                    />
-                                    <p>{group.groupname}</p>
-                                </Link>
+                                <img
+                                    className="medium list "
+                                    src={group.profileurl}
+                                />
+                                <p>{group.groupname}</p>
+
                                 <button
                                     onClick={() => {
                                         dispatch(

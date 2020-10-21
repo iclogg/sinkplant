@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { socket } from "./socket.js";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getGroup, getMembers } from "./functions.js";
+import { getGroup, getMembers, getCurrentWeeks } from "./functions.js";
 
 /* components */
 import Invite from "./invite.js";
@@ -12,11 +12,13 @@ import { markDone, adTask, deleteTask } from "./functions.js";
 export default function GroupPage() {
     const [group, setGroup] = useState({});
     const [members, setMembers] = useState([]);
+    const [assignments, setAssignments] = useState([]);
     const [taskView, setTaskView] = useState(null);
     const [userData, setUserData] = useState({
         title: "",
         taskDescription: "",
     });
+    const [doneTasks, setdoneTasks] = useState({});
 
     const groupId = Number(window.location.pathname.slice(8));
 
@@ -27,7 +29,10 @@ export default function GroupPage() {
         (async () => {
             setGroup(await getGroup(groupId));
             setMembers(await getMembers(groupId));
+            setAssignments(await getCurrentWeeks(groupId));
+            console.log(assignments);
         })(); // end async iffie
+
         console.log("useeffect GroupPage");
     }, [setTaskView]);
 
@@ -50,21 +55,53 @@ export default function GroupPage() {
             console.log("task_id delete", task_id);
 
             // setGroup({ ...group, tasks: [...group.tasks, newTask] });
+            setGroup({
+                ...group,
+                tasks: group.tasks.filter((task) => task.id != task_id),
+            });
         })(); // end async iffie
+    };
+
+    const toggleTastView = () => {
+        setTaskView(null);
+        (async () => {
+            setGroup(await getGroup(groupId));
+            setMembers(await getMembers(groupId));
+        })();
+    };
+
+    const checkAllDone = (task_id) => {
+        for (let i = 0; i < group.tasks.length; i++) {
+            if (group.tasks[i].id == task_id) {
+                if (group.tasks[i].subtasks) {
+                    for (let j = 0; j < group.tasks[i].subtasks.length; j++) {
+                        if (!group.tasks[i].subtasks[j].done) {
+                            return "task-input notdone";
+                        }
+                    }
+                }
+            }
+        }
+
+        return "task-input alldone";
+    };
+
+    const checkIfAssigned = (taskid, week) => {
+        for (let i = 0; i < assignments.length; i++) {}
     };
 
     return (
         <div className="grouppage">
-            <h1>This Group Is {group.groupname} </h1>
+            <h1> {group.groupname} </h1>
             <p>{group.groupbio}</p>
             <Invite groupId={groupId} />
-            <h3>Members</h3>
+            <h3>Members of the Household:</h3>
 
             <div className="members">
                 {members &&
                     members.map((member) => {
                         return (
-                            <div className="group" key={member.user_id}>
+                            <div className="member" key={member.user_id}>
                                 <p>{member.username}</p>
                             </div>
                         );
@@ -73,41 +110,62 @@ export default function GroupPage() {
             <h3>Tasks</h3>
 
             <div className="tasks">
+                <div className="weeks">
+                    <p>Last Week </p>
+                    <p>This Week </p>
+                    <p>Next Week </p>
+                </div>
                 {group.tasks &&
                     group.tasks.map((task) => {
                         return (
-                            <div
-                                className="task"
-                                key={task.id}
-                                onClick={() => setTaskView(task.id)}
-                            >
-                                <p className="sub">{task.title} </p>
+                            <div className="task" key={task.id}>
+                                <p
+                                    className="sub"
+                                    onClick={() => setTaskView(task.id)}
+                                >
+                                    {task.title}&nbsp;&nbsp;
+                                </p>
                                 <i
                                     className="fas fa-trash-alt"
                                     onClick={() => handleDeleteTask(task.id)}
                                 ></i>
+                                <input
+                                    className="task-input"
+                                    list="names"
+                                    type="option"
+                                    name="last"
+                                    value={checkIfAssigned(task.id, "last")}
+                                />
+                                <input
+                                    className={checkAllDone(task.id)}
+                                    list="names"
+                                    type="option"
+                                    name="now"
+                                    value={checkIfAssigned(task.id, "now")}
+                                />
+                                <input
+                                    className="task-input"
+                                    list="names"
+                                    type="option"
+                                    name="next"
+                                    value={checkIfAssigned(task.id, "next")}
+                                />
+                                <datalist id="names">
+                                    {members &&
+                                        members.map((member) => {
+                                            return (
+                                                <option
+                                                    value={member.username}
+                                                    key={member.user_id}
+                                                />
+                                            );
+                                        })}
+                                </datalist>
                             </div>
                         );
                     })}
             </div>
-            {taskView && (
-                <TaskPage
-                    taskArr={group.tasks.filter((task) => task.id == taskView)}
-                />
-            )}
 
-            <div
-                onClick={() => {
-                    setTaskView(null);
-                    (async () => {
-                        setGroup(await getGroup(groupId));
-                        setMembers(await getMembers(groupId));
-                    })();
-                }}
-            >
-                {/* OBS!!!! add logic to get tasks from database againg on this click */}
-                <p>clear task view </p>
-            </div>
             <div className="adtask">
                 <h5>Ad Group Task</h5>
                 <input
@@ -125,9 +183,14 @@ export default function GroupPage() {
                     onChange={(e) => handleChange(e)}
                     value={userData.taskDescription}
                 />
-
                 <button onClick={handleNewTask}>Add Task</button>
             </div>
+            {taskView && (
+                <TaskPage
+                    taskArr={group.tasks.filter((task) => task.id == taskView)}
+                    toggleTastView={toggleTastView}
+                />
+            )}
         </div>
     );
 }

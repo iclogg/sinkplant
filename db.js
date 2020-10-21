@@ -230,3 +230,19 @@ module.exports.deleteTask = (task_id) => {
     const params = [task_id];
     return db.query(q, params);
 };
+
+// ====================================== Get Assignments  ======================================//
+
+module.exports.getCurrentWeeks = (group_id) => {
+    console.log("group_id", group_id);
+
+    const q = `
+        SELECT * from assignment 
+        WHERE week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP))
+        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) - 1 )
+        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 1 )
+        AND group_id = $1;
+        `;
+    const params = [group_id];
+    return db.query(q, params);
+};

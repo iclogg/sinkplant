@@ -397,6 +397,20 @@ app.post("/api/deleteTask/", (req, res) => {
         });
 });
 
+// ====================================== Assignments  ======================================//
+app.get("/api/currentassignments", (req, res) => {
+    console.log("/api/currentassignments");
+
+    db.getCurrentWeeks(req.query.groupid)
+        .then((result) => {
+            console.log(result.rows);
+            res.json(result.rows);
+        })
+        .catch((err) => {
+            "err in getMemberships in /api/currentassignments ", err;
+        });
+});
+
 // ======================= Star route. =======================//
 
 app.get("*", function (req, res) {

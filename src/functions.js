@@ -103,3 +103,16 @@ export async function deleteTask(task_id) {
         console.log(err);
     }
 }
+
+export async function getCurrentWeeks(groupid) {
+    try {
+        const { data } = await axios.get("/api/currentassignments", {
+            params: { groupid },
+        });
+        console.log("currentassignments: ", data);
+
+        return data;
+    } catch (err) {
+        console.log(err);
+    }
+}
