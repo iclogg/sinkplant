@@ -59,7 +59,9 @@ INSERT into subtasks (group_id, task_id, taskDescription ) values(1, 2, 'De-chal
 ASSIGMENT
 INSERT into assignment (group_id, task_id, user_id, week) values(1, 20, 1, 42);
 INSERT into assignment (group_id, task_id, user_id, week) values(1, 28, 1, 43);
-INSERT into assignment (group_id, task_id, user_id, week) values(1, 28, 1, 44);
+INSERT into assignment (group_id, task_id, user_id, week) values(1, 29, 1, 44);
+INSERT into assignment (group_id, task_id, user_id, week) values(1, 30, 2, 44);
+INSERT into assignment (group_id, task_id, user_id, week) values(2, 36, 2, 45);
 
 SELECT * from assignment WHERE week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP));
 
@@ -77,6 +79,12 @@ SELECT * from assignment
         AND group_id = 1;
 
 SELECT * from assignment 
+        WHERE week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP))
+        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) - 1 )
+        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 1 )
+        AND group_id = 1;
+
+SELECT *, (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week) from assignment 
         WHERE week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP))
         OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) - 1 )
         OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 1 )

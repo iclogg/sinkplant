@@ -237,7 +237,7 @@ module.exports.getCurrentWeeks = (group_id) => {
     console.log("group_id", group_id);
 
     const q = `
-        SELECT * from assignment 
+        SELECT *, (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week) from assignment 
         WHERE week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP))
         OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) - 1 )
         OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 1 )

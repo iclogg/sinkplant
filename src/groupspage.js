@@ -87,7 +87,46 @@ export default function GroupPage() {
     };
 
     const checkIfAssigned = (taskid, week) => {
-        for (let i = 0; i < assignments.length; i++) {}
+        for (let i = 0; i < assignments.length; i++) {
+            /*    console.log("assignments[i].week", assignments[i].week);
+            console.log("assignments[i].week++", assignments[i].week--);
+            console.log("assignments[i].week++", assignments[i].week--); */
+
+            if (
+                week == "now" &&
+                assignments[i].this_week == assignments[i].week
+            ) {
+                if (assignments[i].task_id == taskid) {
+                    for (let j = 0; j < members.length; j++) {
+                        if (assignments[i].user_id == members[j].user_id) {
+                            return members[j].username;
+                        }
+                    }
+                }
+            } else if (
+                week == "last" &&
+                assignments[i].this_week == assignments[i].week - 1
+            ) {
+                if (assignments[i].task_id == taskid) {
+                    for (let j = 0; j < members.length; j++) {
+                        if (assignments[i].user_id == members[j].user_id) {
+                            return members[j].username;
+                        }
+                    }
+                }
+            } else if (
+                week == "next" &&
+                assignments[i].this_week == assignments[i].week + 1
+            ) {
+                if (assignments[i].task_id == taskid) {
+                    for (let j = 0; j < members.length; j++) {
+                        if (assignments[i].user_id == members[j].user_id) {
+                            return members[j].username;
+                        }
+                    }
+                }
+            }
+        }
     };
 
     return (

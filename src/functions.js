@@ -109,7 +109,7 @@ export async function getCurrentWeeks(groupid) {
         const { data } = await axios.get("/api/currentassignments", {
             params: { groupid },
         });
-        console.log("currentassignments: ", data);
+        console.log("currentassignments in functions: ", data);
 
         return data;
     } catch (err) {
