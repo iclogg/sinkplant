@@ -193,6 +193,15 @@ module.exports.adSubTask = (taskdescription, group_id, task_id) => {
     return db.query(q, params);
 };
 
+module.exports.adTask = (taskDescription, group_id, title) => {
+    const q = `
+        INSERT into tasks (taskDescription, group_id, title)
+        values($1, $2, $3) RETURNING *
+        `;
+    const params = [taskDescription, group_id, title];
+    return db.query(q, params);
+};
+
 // ====================================== Task Removing  ======================================//
 
 module.exports.deleteSubTask = (task_id) => {

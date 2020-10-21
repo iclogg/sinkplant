@@ -9,3 +9,7 @@ main {
 .sub {
     display: inline;
 }
+
+i {
+    font-size: small;
+}

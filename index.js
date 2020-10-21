@@ -354,6 +354,19 @@ app.post("/api/adSubTask/", (req, res) => {
         });
 });
 
+app.post("/api/adTask/", (req, res) => {
+    console.log("/api/adTask");
+
+    db.adTask(req.body.taskDescription, req.body.group_id, req.body.title)
+        .then((result) => {
+            console.log("result.rows[0]in adTask", result.rows[0]);
+            res.json(result.rows[0]);
+        })
+        .catch((err) => {
+            console.log("err in dbqery in api/adTask ", err);
+        });
+});
+
 // ====================================== Task Removing  ======================================//
 
 app.post("/api/deleteSubTask/", (req, res) => {
@@ -372,13 +385,15 @@ app.post("/api/deleteSubTask/", (req, res) => {
 app.post("/api/deleteTask/", (req, res) => {
     console.log("/api/deleteTask");
 
-    db.deleteTask(req.body.task_id)
-        .then((result) => {
-            console.log("result.rows[0]in deleteTask", result.rows[0]);
-            res.json(result.rows[0]);
+    db.deleteAllSubTask(req.body.task_id)
+        .then(() => {
+            db.deleteTask(req.body.task_id);
+        })
+        .then(() => {
+            res.json();
         })
         .catch((err) => {
-            console.log("err in dbqery in api/deleteSubTask ", err);
+            console.log("err in dbqery in api/deleteTask ", err);
         });
 });
 

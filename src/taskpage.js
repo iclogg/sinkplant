@@ -5,6 +5,10 @@ import { markDone, adSubTask, deleteSubTask } from "./functions.js";
 
 export default function TaskPage({ taskArr }) {
     let task = taskArr[0];
+    if (task.subtasks === undefined) {
+        task.subtasks = [];
+    }
+
     const [newTask, setNewTask] = useState("");
     const [taskState, setTaskState] = useState({});
 

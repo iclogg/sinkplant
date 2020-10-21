@@ -28,7 +28,7 @@
     title VARCHAR(10) NOT NULL,
     taskDescription VARCHAR(255),
     assigned_user INT,
-    done BOOLEAN DEFAULT false
+    done BOOLEAN DEFAULT false 
 );
 
 
