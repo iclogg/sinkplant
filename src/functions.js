@@ -190,4 +190,5 @@ export async function repeatGroupAssignment(
         }
     }
     console.log(dataArr);
+    return dataArr;
 }

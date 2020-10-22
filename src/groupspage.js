@@ -224,12 +224,12 @@ export default function GroupPage() {
                 "handleNewAssignment -> newAssignment",
                 newRepeatAssignments
             );
-            // setAssignments([...assignments, ...newRepeatAssignments]);
-            /* setUserData({
+            setAssignments([...assignments, ...newRepeatAssignments]);
+            setUserData({
                 assignmemberrepeat: null,
                 repeattasks: null,
                 weekassignrepeat: null,
-            }); */
+            });
         })(); // end async iffie
     };
 
