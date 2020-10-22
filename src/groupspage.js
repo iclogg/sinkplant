@@ -196,10 +196,10 @@ export default function GroupPage() {
                 weekassign
             );
             console.log("handleNewAssignment -> newAssignment", newAssignment);
-            /* setAssignments((assignments) => {
+            setAssignments((assignments) => {
                 return [newAssignment, ...assignments];
-            }); */
-            location.reload();
+            });
+            // location.reload();
             console.log("assignments", assignments);
 
             /*  setUserData({
