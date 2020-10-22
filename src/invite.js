@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "./axios";
 
 export default function Invite({ groupId }) {
-    const [inviteEmail, setInviteEmail] = useState({});
+    const [inviteEmail, setInviteEmail] = useState("");
     const handleChange = (e) => {
         setInviteEmail(e.target.value);
     };
@@ -16,6 +16,7 @@ export default function Invite({ groupId }) {
                     inviteEmail,
                     groupId,
                 });
+                setInviteEmail("");
             } catch (err) {
                 console.log("err in submitInvite", err);
             }
@@ -30,6 +31,7 @@ export default function Invite({ groupId }) {
                 type="email"
                 placeholder="email"
                 onChange={(e) => handleChange(e)}
+                value={inviteEmail}
             />
             <button onClick={submitInvite}>Invite</button>
         </div>

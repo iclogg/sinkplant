@@ -48,6 +48,17 @@ module.exports.getUserMemberships = (id) => {
     return db.query(q, params);
 };
 
+/* ============================== Add Group ========================== */
+
+module.exports.adGroup = (name, groupDescription, userId) => {
+    const q = `
+        INSERT into groups (groupname, groupBio, creator)
+        values($1, $2, $3) RETURNING *
+        `;
+    const params = [name, groupDescription, userId];
+    return db.query(q, params);
+};
+
 /* ============================== Groups gets group info ========================== */
 
 module.exports.getUserGroups = (groupsIds, userId) => {

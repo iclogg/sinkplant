@@ -81,6 +81,27 @@ export async function leaveGroup(idGroup) {
     }
 }
 
+export async function adGroup(name, groupDescription) {
+    try {
+        const { data } = await axios.post(`/api/adGroup/`, {
+            name,
+            groupDescription,
+        });
+        console.log("Groups -> data", data);
+
+        data.accepted = true;
+        data.groups_id = data.id;
+        data.startdate = data.created_at;
+
+        return {
+            type: "AD_GROUP",
+            newGroup: data,
+        };
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 // ======================= Get Info for Tasks Page =======================//
 
 export async function getGroup(groupId) {
@@ -90,7 +111,7 @@ export async function getGroup(groupId) {
         const { data } = await axios.get("/api/groupspage", {
             params: { groupId: groupId },
         });
-        console.log("Groups -> data", data);
+
         return {
             type: "USER_GROUPS",
             userGroupInfo: data,

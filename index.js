@@ -267,6 +267,35 @@ app.get("/api/groupmembers", (req, res) => {
         });
 });
 
+// ======================= Get Members of Group =======================//
+
+app.post("/api/adGroup/", (req, res) => {
+    console.log("/api/adGroup");
+
+    db.adGroup(req.body.name, req.body.groupDescription, req.session.userId)
+        .then((result) => {
+            db.sendGroupInvite(result.rows[0].id, req.session.userId)
+                .then(() => {
+                    db.acceptGroupInvite(result.rows[0].id, req.session.userId)
+                        .then(() => {
+                            res.json(result.rows[0]);
+                        })
+                        .catch((err) => {
+                            console.log(
+                                "err in acceptGroupInvite in api/adGroup ",
+                                err
+                            );
+                        });
+                })
+                .catch((err) => {
+                    console.log("err in sendGroupInvite in api/adGroup ", err);
+                });
+        })
+        .catch((err) => {
+            console.log("err in adGroup in api/adGroup ", err);
+        });
+});
+
 // ======================= Update Membership Status =======================//
 
 app.post("/api/updateMembership", (req, res) => {
@@ -297,7 +326,6 @@ app.post("/api/sendInvite", (req, res) => {
 
     db.getUserInfoViaEmail(req.body.inviteEmail)
         .then((result) => {
-            console.log();
             db.sendGroupInvite(req.body.groupId, result.rows[0].user_id)
                 .then(() => {
                     res.json();

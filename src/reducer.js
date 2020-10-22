@@ -52,5 +52,12 @@ export default function reducer(state = {}, action) {
         });
     }
 
+    if (action.type === "AD_GROUP") {
+        state = {
+            ...state,
+            userGroupInfo: [...state.userGroupInfo, action.newGroup],
+        };
+    }
+
     return state;
 }

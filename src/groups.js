@@ -7,6 +7,7 @@ import {
     acceptGroupInvite,
     leaveGroup,
     adCurrentUser,
+    adGroup,
 } from "./actions";
 
 export default function Groups() {
@@ -25,6 +26,7 @@ export default function Groups() {
     const groups = useSelector(
         (state) => state.currentUser && state.currentUser.memberships
     );
+    const [userData, setUserData] = useState({});
 
     let groupsNrs = [];
 
@@ -45,11 +47,23 @@ export default function Groups() {
         };
     }, []);
 
+    const handleChange = (e) => {
+        setUserData({ ...userData, [e.target.name]: e.target.value });
+    };
+
+    const handleNewGroup = async () => {
+        const { name, groupDescription } = userData;
+        dispatch(adGroup(name, groupDescription));
+        setUserData({
+            name: "",
+            groupDescription: "",
+        });
+    };
+
     return (
         <div className="groups-page">
-            <h1>Groups Page</h1>
-            <h2>Your Groups</h2>
             <div className="groups-joined">
+                <h2>Your Groups</h2>
                 {groupsJoined &&
                     groupsJoined.map((group) => {
                         return (
@@ -83,8 +97,9 @@ export default function Groups() {
                         );
                     })}
             </div>
-            <h2>Your Invitations</h2>
+
             <div className="groups-offered">
+                <h2>Your Invitations</h2>
                 {groupsOffered &&
                     groupsOffered.map((group) => {
                         return (
@@ -117,6 +132,25 @@ export default function Groups() {
                             </div>
                         );
                     })}
+            </div>
+            <div className="adgroup">
+                <h5>Create a group</h5>
+                <input
+                    name="name"
+                    type="text"
+                    placeholder="Group Name"
+                    onChange={(e) => handleChange(e)}
+                    value={userData.name}
+                />
+
+                <input
+                    name="groupDescription"
+                    type="text"
+                    placeholder="A short description of group"
+                    onChange={(e) => handleChange(e)}
+                    value={userData.groupDescription}
+                />
+                <button onClick={handleNewGroup}>Create Group</button>
             </div>
         </div>
     );

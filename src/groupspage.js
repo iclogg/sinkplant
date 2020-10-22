@@ -286,7 +286,7 @@ export default function GroupPage() {
                     members.map((member) => {
                         return (
                             <div className="member" key={member.user_id}>
-                                <p>{member.username}</p>
+                                <h3>{member.username}</h3>
                             </div>
                         );
                     })}
@@ -295,17 +295,17 @@ export default function GroupPage() {
 
             <div className="tasks">
                 <div className="weeks">
-                    <p>
+                    <h4 className="week">
                         Last Week{" "}
                         {assignments[0] && assignments[0].this_week - 1}{" "}
-                    </p>
-                    <p>
+                    </h4>
+                    <h4 className="week">
                         This Week {assignments[0] && assignments[0].this_week}
-                    </p>
-                    <p>
+                    </h4>
+                    <h4 className="week">
                         Next Week{" "}
                         {assignments[0] && assignments[0].this_week + 1}
-                    </p>
+                    </h4>
                 </div>
                 {group.tasks &&
                     group.tasks.map((task) => {
@@ -313,12 +313,12 @@ export default function GroupPage() {
 
                         return (
                             <div className="task" key={task.id}>
-                                <p
+                                <h4
                                     className="sub"
                                     onClick={() => setTaskView(task.id)}
                                 >
                                     {task.title}&nbsp;&nbsp;
-                                </p>
+                                </h4>
                                 <i
                                     className="fas fa-trash-alt"
                                     onClick={() => handleDeleteTask(task.id)}
