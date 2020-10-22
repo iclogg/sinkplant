@@ -145,7 +145,11 @@ export async function repeatGroupAssignment(
     start_week,
     task_id
 ) {
+    nr_of_weeks = Number(nr_of_weeks) - 1;
+    start_week = Number(start_week);
+
     let weekArr = [];
+
     while (nr_of_weeks > 0) {
         weekArr.unshift(start_week + nr_of_weeks);
         nr_of_weeks--;
@@ -155,7 +159,35 @@ export async function repeatGroupAssignment(
         member_id_arr.push(...member_id_arr);
     }
 
-    for (let i = 0; i < nr_of_weeks.length; i++) {
-        await db.assignTask(member_id_arr[i], groupId, task_id, nr_of_weeks[i]);
+    let assigmentArr = [];
+
+    for (let i = 0; i < weekArr.length; i++) {
+        assigmentArr = [
+            ...assigmentArr,
+            {
+                member_id: member_id_arr[i],
+                groupId: groupId,
+                assigntask: task_id,
+                weekassign: weekArr[i],
+            },
+        ];
+        /* await db.assignTask(member_id_arr[i], groupId, task_id, nr_of_weeks[i]); */
     }
+    let dataArr = [];
+    for (let j = 0; j < assigmentArr.length; j++) {
+        const { member_id, groupId, assigntask, weekassign } = assigmentArr[j];
+        try {
+            const { data } = await axios.post("/api/assigntask", {
+                member_id,
+                groupId,
+                assigntask,
+                weekassign,
+            });
+
+            dataArr.push(data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    console.log(dataArr);
 }

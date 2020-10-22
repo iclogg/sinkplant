@@ -12,7 +12,12 @@ import {
 /* components */
 import Invite from "./invite.js";
 import TaskPage from "./taskpage.js";
-import { markDone, adTask, deleteTask } from "./functions.js";
+import {
+    markDone,
+    adTask,
+    deleteTask,
+    repeatGroupAssignment,
+} from "./functions.js";
 
 export default function GroupPage() {
     const [group, setGroup] = useState({});
@@ -172,6 +177,62 @@ export default function GroupPage() {
         })(); // end async iffie
     };
 
+    const handleNewAssignmentRepeat = () => {
+        (async () => {
+            const {
+                assigntaskrepeat,
+                startmember,
+                weekassignrepeat,
+                weeknrrepeat,
+            } = userData;
+
+            const start_member_id = members.filter(
+                (mem) => mem.username == startmember
+            )[0].user_id;
+            let member_id_arr = [];
+            for (let i = 0; i < members.length; i++) {
+                member_id_arr.push(members[i].user_id);
+            }
+
+            /* nice to have logic for picking starting member */
+            let secondhalf;
+            console.log("member_id_arr", member_id_arr);
+            for (let j = 0; j < member_id_arr.length; j++) {
+                if (member_id_arr[j] == start_member_id) {
+                    console.log("member_id_arr", member_id_arr);
+                    secondhalf = member_id_arr.splice(j);
+                    console.log("member_id_arr", member_id_arr);
+                }
+            }
+
+            member_id_arr = [...secondhalf, ...member_id_arr];
+            console.log("member_id_arr", member_id_arr);
+
+            const task_id = group.tasks.filter(
+                (task) => task.title == assigntaskrepeat
+            );
+            console.log("", task_id);
+
+            const newRepeatAssignments = await repeatGroupAssignment(
+                member_id_arr,
+                groupId,
+                weeknrrepeat,
+                weekassignrepeat,
+                task_id[0].id
+            );
+            console.log(
+                "handleNewAssignment -> newAssignment",
+                newRepeatAssignments
+            );
+            // setAssignments([...assignments, ...newRepeatAssignments]);
+            /* setUserData({
+                assignmemberrepeat: null,
+                repeattasks: null,
+                weekassignrepeat: null,
+            }); */
+        })(); // end async iffie
+    };
+
     return (
         <div className="grouppage">
             <h1> {group.groupname} </h1>
@@ -290,6 +351,46 @@ export default function GroupPage() {
                 </datalist>
                 <button onClick={handleNewAssignment}>Assign</button>
             </div>
+
+            <h5>Assign Repeat Task</h5>
+            <input
+                className="task-input"
+                list="names"
+                type="option"
+                name="startmember"
+                placeholder="Who starts?"
+                onInput={(e) => handleChange(e)}
+            />
+            <input
+                name="weekassignrepeat"
+                type="number"
+                min="1"
+                max="52"
+                placeholder="Starting week?"
+                onChange={(e) => handleChange(e)}
+            />
+            <input
+                name="weeknrrepeat"
+                type="number"
+                min="2"
+                max="8"
+                placeholder="For how many weeks?"
+                onChange={(e) => handleChange(e)}
+            />
+            <input
+                className="task-input"
+                list="repeattasks"
+                type="option"
+                name="assigntaskrepeat"
+                onInput={(e) => handleChange(e)}
+            />
+            <datalist id="repeattasks">
+                {group.tasks &&
+                    group.tasks.map((task) => {
+                        return <option value={task.title} key={task.id} />;
+                    })}
+            </datalist>
+            <button onClick={handleNewAssignmentRepeat}>Assign</button>
 
             <div className="adtask">
                 <h5>Ad Group Task</h5>
