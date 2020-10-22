@@ -20,6 +20,7 @@ import {
 } from "./functions.js";
 
 export default function GroupPage() {
+    const [, forceUpdate] = useState();
     const [group, setGroup] = useState({});
     const [members, setMembers] = useState([]);
     const [assignments, setAssignments] = useState([]);
@@ -46,6 +47,11 @@ export default function GroupPage() {
         console.log("useeffect GroupPage");
     }, [setTaskView]);
 
+    /* useEffect(() => {
+        console.log("assignments has been updated");
+        // setTimeout(forceUpdate, 2000);
+    }, [assignments]); */
+
     const handleNewTask = () => {
         (async () => {
             const { title, taskDescription } = userData;
@@ -65,6 +71,7 @@ export default function GroupPage() {
             console.log("task_id delete", task_id);
 
             // setGroup({ ...group, tasks: [...group.tasks, newTask] });
+
             setGroup({
                 ...group,
                 tasks: group.tasks.filter((task) => task.id != task_id),
@@ -99,6 +106,7 @@ export default function GroupPage() {
     const checkIfAssigned = (taskid, week) => {
         console.log("checkIfAssigned running");
         console.log("task.id", taskid);
+        console.log("week", week);
         for (let i = 0; i < assignments.length; i++) {
             /*    console.log("assignments[i].week", assignments[i].week);
             console.log("assignments[i].week++", assignments[i].week--);
@@ -255,15 +263,20 @@ export default function GroupPage() {
                 task_id[0].id
             );
 
-            location.reload();
+            // location.reload();
 
             console.log(
                 "handleNewAssignment -> newAssignment",
                 newRepeatAssignments
             );
-            /* setAssignments(
+            /*  setAssignments(
                 assignments.unshift(...newRepeatAssignments.reverse())
-            ); */
+            );
+ */
+            setAssignments((assignments) => {
+                return [...newRepeatAssignments, ...assignments];
+            });
+
             console.log("assignments", assignments);
 
             /* setUserData({
@@ -310,6 +323,7 @@ export default function GroupPage() {
                 {group.tasks &&
                     group.tasks.map((task) => {
                         console.log("map running");
+                        console.log(task.title);
 
                         return (
                             <div className="task" key={task.id}>
