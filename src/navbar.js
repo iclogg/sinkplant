@@ -7,7 +7,7 @@ import Logout from "./logout.js";
 export default function Navbar() {
     return (
         <div className="navbar">
-            <h1>🌱</h1>
+            <h1>🌱 SinkPlant</h1>
 
             <h4>
                 <Link to={"/"}>Your Groups</Link>

@@ -134,7 +134,7 @@ export default function Groups() {
                     })}
             </div>
             <div className="adgroup">
-                <h5>Create a group</h5>
+                <h2>Create a group</h2>
                 <input
                     name="name"
                     type="text"

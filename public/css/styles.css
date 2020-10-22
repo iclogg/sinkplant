@@ -7,7 +7,7 @@ body {
 }
 
 .input {
-    font-family: "Comfortaa", cursive;
+    font-family: "Alfa Slab One", cursive;
 }
 
 .done {
@@ -22,6 +22,12 @@ i {
     font-size: small;
 }
 
+button {
+    background-color: white;
+    border-radius: 5px;
+    margin: 0.1em;
+}
+
 h1,
 h2,
 h3,
@@ -29,7 +35,7 @@ h4,
 h5,
 h6,
 button {
-    font-family: "Staatliches", cursive;
+    font-family: "Alfa Slab One", cursive;
 }
 
 .clickable {
@@ -58,12 +64,14 @@ button {
     width: 98.5%;
     align-items: baseline;
     border-bottom: rgb(132, 216, 132) solid 1px;
+    box-shadow: 0.5px rgb(16, 59, 16);
     height: 3em;
 }
 
 .navbar h4:nth-of-type(1) {
     grid-column: 8;
 }
+
 .navbar h4,
 a {
     justify-self: center;
@@ -76,6 +84,13 @@ a {
 
 .navbar h1 {
     margin-top: 0;
+    font-family: "Alfa Slab One", cursive;
+    color: rgb(132, 216, 132);
+    text-shadow: 2px 2px 7px rgb(16, 59, 16);
+}
+.navbar h4:hover,
+a:hover {
+    text-shadow: 2px 2px 2px rgb(16, 59, 16);
 }
 
 /* =========== All Groups Page ============== */
@@ -86,11 +101,30 @@ a {
 }
 
 .groups-page h2 {
-    margin-bottom: 0;
+    text-transform: uppercase;
 }
 
 .adgroup input {
     width: 15em;
+}
+
+.groups-page a {
+    text-decoration: none;
+    color: black;
+}
+
+.groups-offered p {
+    text-transform: uppercase;
+}
+
+.groups-page a p {
+    text-transform: uppercase;
+}
+
+.groups-page a:hover {
+    text-decoration: none;
+    color: black;
+    text-shadow: 2px 2px 3px rgb(16, 59, 16);
 }
 
 /* =========== Group Page ============== */
@@ -107,19 +141,38 @@ a {
 
 .grouppage h1 {
     margin-top: 0;
+    text-transform: uppercase;
+}
+
+.adgroup {
+    margin-top: 2em;
+}
+
+.adgroup h2 {
+    margin-top: 2em;
+}
+
+.adgroup input {
+    background-color: white;
+    margin: 0.2em;
+    width: 13em;
 }
 
 /* Tasks Board */
 
+.weeks {
+    margin-top: 1.7em;
+}
+
 .week {
-    margin-bottom: 0;
-    margin-top: 0.9em;
+    margin-bottom: 0.67em;
+    margin-top: 0.1em;
     margin-right: 0.5em;
+    font-weight: lighter;
 }
 
 .grouppage .tasks {
     display: flex;
-    justify-content: center;
 }
 
 .grouppage .task {
@@ -142,11 +195,18 @@ a {
     margin-top: 0;
 }
 
-/* Assignment */
-
-.assigntask input {
-    width: 8em;
+.grouppage input {
+    background-color: white;
+    margin: 0.2em;
+    width: 11.2em;
 }
+
+/* Task Grid */
+.task {
+    margin: 0.5em;
+}
+
+/* Assignment */
 
 /* =========== Task Detail View ============== */
 

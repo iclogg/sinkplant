@@ -41,10 +41,7 @@ export default function GroupPage() {
             setGroup(await getGroup(groupId));
             setMembers(await getMembers(groupId));
             setAssignments(await getCurrentWeeks(groupId));
-            console.log(assignments);
         })(); // end async iffie
-
-        console.log("useeffect GroupPage");
     }, [setTaskView]);
 
     /* useEffect(() => {
@@ -56,7 +53,6 @@ export default function GroupPage() {
         (async () => {
             const { title, taskDescription } = userData;
             const newTask = await adTask(taskDescription, groupId, title);
-            console.log("handleNewTask -> newTask", newTask);
             setGroup({ ...group, tasks: [...group.tasks, newTask] });
             setUserData({
                 title: "",
@@ -68,7 +64,6 @@ export default function GroupPage() {
     const handleDeleteTask = (task_id) => {
         (async () => {
             await deleteTask(task_id);
-            console.log("task_id delete", task_id);
 
             // setGroup({ ...group, tasks: [...group.tasks, newTask] });
 
@@ -104,25 +99,7 @@ export default function GroupPage() {
     };
 
     const checkIfAssigned = (taskid, week) => {
-        console.log("checkIfAssigned running");
-        console.log("task.id", taskid);
-        console.log("week", week);
         for (let i = 0; i < assignments.length; i++) {
-            /*    console.log("assignments[i].week", assignments[i].week);
-            console.log("assignments[i].week++", assignments[i].week--);
-            console.log("assignments[i].week++", assignments[i].week--); */
-            console.log(
-                week == "now" && assignments[i].this_week == assignments[i].week
-            );
-            console.log(
-                week == "last" &&
-                    assignments[i].this_week - 1 == assignments[i].week
-            );
-            console.log(
-                week == "next" &&
-                    assignments[i].this_week + 1 == assignments[i].week
-            );
-
             if (
                 week == "now" &&
                 assignments[i].this_week == assignments[i].week
@@ -130,15 +107,6 @@ export default function GroupPage() {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
                         if (assignments[i].user_id == members[j].user_id) {
-                            /*   setUserData({
-                                ...userData,
-                                [week]: members[j].username,
-                            }); */
-                            console.log(
-                                "members[j].username now",
-                                members[j].username
-                            );
-
                             return members[j].username;
                         }
                     }
@@ -150,15 +118,6 @@ export default function GroupPage() {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
                         if (assignments[i].user_id == members[j].user_id) {
-                            /*   setUserData({
-                                ...userData,
-                                [week]: members[j].username,
-                            }); */
-                            console.log(
-                                "members[j].username last",
-                                members[j].username
-                            );
-
                             return members[j].username;
                         }
                     }
@@ -170,15 +129,61 @@ export default function GroupPage() {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
                         if (assignments[i].user_id == members[j].user_id) {
-                            /* setUserData({
-                                ...userData,
-                                [week]: members[j].username,
-                            }) */
-                            console.log(
-                                "members[j].username next",
-                                members[j].username
-                            );
-
+                            return members[j].username;
+                        }
+                    }
+                }
+            } else if (
+                week == "nextnext" &&
+                assignments[i].this_week + 2 == assignments[i].week
+            ) {
+                if (assignments[i].task_id == taskid) {
+                    for (let j = 0; j < members.length; j++) {
+                        if (assignments[i].user_id == members[j].user_id) {
+                            return members[j].username;
+                        }
+                    }
+                }
+            } else if (
+                week == "nextnextnext" &&
+                assignments[i].this_week + 3 == assignments[i].week
+            ) {
+                if (assignments[i].task_id == taskid) {
+                    for (let j = 0; j < members.length; j++) {
+                        if (assignments[i].user_id == members[j].user_id) {
+                            return members[j].username;
+                        }
+                    }
+                }
+            } else if (
+                week == "nextnextnextnext" &&
+                assignments[i].this_week + 4 == assignments[i].week
+            ) {
+                if (assignments[i].task_id == taskid) {
+                    for (let j = 0; j < members.length; j++) {
+                        if (assignments[i].user_id == members[j].user_id) {
+                            return members[j].username;
+                        }
+                    }
+                }
+            } else if (
+                week == "nextnextnextnextnext" &&
+                assignments[i].this_week + 5 == assignments[i].week
+            ) {
+                if (assignments[i].task_id == taskid) {
+                    for (let j = 0; j < members.length; j++) {
+                        if (assignments[i].user_id == members[j].user_id) {
+                            return members[j].username;
+                        }
+                    }
+                }
+            } else if (
+                week == "nextnextnextnextnextnext" &&
+                assignments[i].this_week + 6 == assignments[i].week
+            ) {
+                if (assignments[i].task_id == taskid) {
+                    for (let j = 0; j < members.length; j++) {
+                        if (assignments[i].user_id == members[j].user_id) {
                             return members[j].username;
                         }
                     }
@@ -203,18 +208,9 @@ export default function GroupPage() {
                 task_id[0].id,
                 weekassign
             );
-            console.log("handleNewAssignment -> newAssignment", newAssignment);
             setAssignments((assignments) => {
                 return [newAssignment, ...assignments];
             });
-            // location.reload();
-            console.log("assignments", assignments);
-
-            /*  setUserData({
-                assignmember: null,
-                assigntask: null,
-                weekassign: null,
-            }); */
         })(); // end async iffie
     };
 
@@ -238,22 +234,17 @@ export default function GroupPage() {
 
             /* nice to have logic for picking starting member */
             let secondhalf;
-            console.log("member_id_arr", member_id_arr);
             for (let j = 0; j < member_id_arr.length; j++) {
                 if (member_id_arr[j] == start_member_id) {
-                    console.log("member_id_arr", member_id_arr);
                     secondhalf = member_id_arr.splice(j);
-                    console.log("member_id_arr", member_id_arr);
                 }
             }
 
             member_id_arr = [...secondhalf, ...member_id_arr];
-            console.log("member_id_arr", member_id_arr);
 
             const task_id = group.tasks.filter(
                 (task) => task.title == assigntaskrepeat
             );
-            console.log("", task_id);
 
             const newRepeatAssignments = await repeatGroupAssignment(
                 member_id_arr,
@@ -265,25 +256,9 @@ export default function GroupPage() {
 
             // location.reload();
 
-            console.log(
-                "handleNewAssignment -> newAssignment",
-                newRepeatAssignments
-            );
-            /*  setAssignments(
-                assignments.unshift(...newRepeatAssignments.reverse())
-            );
- */
             setAssignments((assignments) => {
                 return [...newRepeatAssignments, ...assignments];
             });
-
-            console.log("assignments", assignments);
-
-            /* setUserData({
-                assignmemberrepeat: null,
-                repeattasks: null,
-                weekassignrepeat: null,
-            }); */
         })(); // end async iffie
     };
 
@@ -308,23 +283,29 @@ export default function GroupPage() {
 
             <div className="tasks">
                 <div className="weeks">
+                    <h4 className="week">Last Week </h4>
+                    <h4 className="week">Current Week </h4>
                     <h4 className="week">
-                        Last Week{" "}
-                        {assignments[0] && assignments[0].this_week - 1}{" "}
+                        Week {assignments[0] && assignments[0].this_week + 1}
                     </h4>
                     <h4 className="week">
-                        This Week {assignments[0] && assignments[0].this_week}
+                        Week {assignments[0] && assignments[0].this_week + 2}
                     </h4>
                     <h4 className="week">
-                        Next Week{" "}
-                        {assignments[0] && assignments[0].this_week + 1}
+                        Week {assignments[0] && assignments[0].this_week + 3}
+                    </h4>
+                    <h4 className="week">
+                        Week {assignments[0] && assignments[0].this_week + 4}
+                    </h4>
+                    <h4 className="week">
+                        Week {assignments[0] && assignments[0].this_week + 5}
+                    </h4>
+                    <h4 className="week">
+                        Week {assignments[0] && assignments[0].this_week + 6}
                     </h4>
                 </div>
                 {group.tasks &&
                     group.tasks.map((task) => {
-                        console.log("map running");
-                        console.log(task.title);
-
                         return (
                             <div className="task" key={task.id}>
                                 <h4
@@ -349,6 +330,45 @@ export default function GroupPage() {
                                 >
                                     {checkIfAssigned(task.id, "next")}
                                 </p>
+                                <p
+                                    className="task-input"
+                                    onInput={(e) => handleChange(e)}
+                                >
+                                    {checkIfAssigned(task.id, "nextnext")}
+                                </p>
+                                <p
+                                    className="task-input"
+                                    onInput={(e) => handleChange(e)}
+                                >
+                                    {checkIfAssigned(task.id, "nextnextnext")}
+                                </p>
+                                <p
+                                    className="task-input"
+                                    onInput={(e) => handleChange(e)}
+                                >
+                                    {checkIfAssigned(
+                                        task.id,
+                                        "nextnextnextnext"
+                                    )}
+                                </p>
+                                <p
+                                    className="task-input"
+                                    onInput={(e) => handleChange(e)}
+                                >
+                                    {checkIfAssigned(
+                                        task.id,
+                                        "nextnextnextnextnext"
+                                    )}
+                                </p>
+                                <p
+                                    className="task-input"
+                                    onInput={(e) => handleChange(e)}
+                                >
+                                    {checkIfAssigned(
+                                        task.id,
+                                        "nextnextnextnextnextnext"
+                                    )}
+                                </p>
                             </div>
                         );
                     })}
@@ -356,7 +376,6 @@ export default function GroupPage() {
             <div className="assigntask">
                 <h5>Assign Task</h5>
                 <input
-                    className="task-input"
                     list="names"
                     type="option"
                     name="assignmember"
@@ -382,7 +401,6 @@ export default function GroupPage() {
                     onChange={(e) => handleChange(e)}
                 />
                 <input
-                    className="task-input"
                     list="tasks"
                     type="option"
                     name="assigntask"
@@ -400,7 +418,6 @@ export default function GroupPage() {
             <h5>Assign Repeat Task</h5>
             <div className="assigntask">
                 <input
-                    className="task-input"
                     list="names"
                     type="option"
                     name="startmember"
@@ -424,7 +441,6 @@ export default function GroupPage() {
                     onChange={(e) => handleChange(e)}
                 />
                 <input
-                    className="task-input"
                     list="repeattasks"
                     type="option"
                     name="assigntaskrepeat"
