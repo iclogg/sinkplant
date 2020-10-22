@@ -47,6 +47,19 @@ i {
     background-color: lightgrey;
 }
 
+.task-input {
+    width: 8em;
+    border: black solid 1px;
+    height: 1em;
+    margin-top: 0;
+}
+
+/* Assignment */
+
+.assigntask input {
+    width: 8em;
+}
+
 /* =========== Task Detail View ============== */
 
 /* overlay */

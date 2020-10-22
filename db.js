@@ -257,7 +257,7 @@ module.exports.assignTask = (member_id, groupId, assigntask, weekassign) => {
     return db.query(q, params);
 };
 
-module.exports.assignRepeatTask = (
+/* module.exports.assignRepeatTask = (
     member_id,
     groupId,
     assigntask,
@@ -269,4 +269,4 @@ module.exports.assignRepeatTask = (
         `;
     const params = [member_id, groupId, assigntask, weekassign];
     return db.query(q, params);
-};
+}; */

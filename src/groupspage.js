@@ -97,10 +97,23 @@ export default function GroupPage() {
     };
 
     const checkIfAssigned = (taskid, week) => {
+        console.log("checkIfAssigned running");
+        console.log("task.id", taskid);
         for (let i = 0; i < assignments.length; i++) {
             /*    console.log("assignments[i].week", assignments[i].week);
             console.log("assignments[i].week++", assignments[i].week--);
             console.log("assignments[i].week++", assignments[i].week--); */
+            console.log(
+                week == "now" && assignments[i].this_week == assignments[i].week
+            );
+            console.log(
+                week == "last" &&
+                    assignments[i].this_week - 1 == assignments[i].week
+            );
+            console.log(
+                week == "next" &&
+                    assignments[i].this_week + 1 == assignments[i].week
+            );
 
             if (
                 week == "now" &&
@@ -113,6 +126,11 @@ export default function GroupPage() {
                                 ...userData,
                                 [week]: members[j].username,
                             }); */
+                            console.log(
+                                "members[j].username now",
+                                members[j].username
+                            );
+
                             return members[j].username;
                         }
                     }
@@ -128,6 +146,11 @@ export default function GroupPage() {
                                 ...userData,
                                 [week]: members[j].username,
                             }); */
+                            console.log(
+                                "members[j].username last",
+                                members[j].username
+                            );
+
                             return members[j].username;
                         }
                     }
@@ -143,6 +166,11 @@ export default function GroupPage() {
                                 ...userData,
                                 [week]: members[j].username,
                             }) */
+                            console.log(
+                                "members[j].username next",
+                                members[j].username
+                            );
+
                             return members[j].username;
                         }
                     }
@@ -168,12 +196,17 @@ export default function GroupPage() {
                 weekassign
             );
             console.log("handleNewAssignment -> newAssignment", newAssignment);
-            setAssignments([...assignments, newAssignment]);
-            setUserData({
+            /* setAssignments((assignments) => {
+                return [newAssignment, ...assignments];
+            }); */
+            location.reload();
+            console.log("assignments", assignments);
+
+            /*  setUserData({
                 assignmember: null,
                 assigntask: null,
                 weekassign: null,
-            });
+            }); */
         })(); // end async iffie
     };
 
@@ -190,6 +223,7 @@ export default function GroupPage() {
                 (mem) => mem.username == startmember
             )[0].user_id;
             let member_id_arr = [];
+
             for (let i = 0; i < members.length; i++) {
                 member_id_arr.push(members[i].user_id);
             }
@@ -220,16 +254,23 @@ export default function GroupPage() {
                 weekassignrepeat,
                 task_id[0].id
             );
+
+            location.reload();
+
             console.log(
                 "handleNewAssignment -> newAssignment",
                 newRepeatAssignments
             );
-            setAssignments([...assignments, ...newRepeatAssignments]);
-            setUserData({
+            /* setAssignments(
+                assignments.unshift(...newRepeatAssignments.reverse())
+            ); */
+            console.log("assignments", assignments);
+
+            /* setUserData({
                 assignmemberrepeat: null,
                 repeattasks: null,
                 weekassignrepeat: null,
-            });
+            }); */
         })(); // end async iffie
     };
 
@@ -268,6 +309,8 @@ export default function GroupPage() {
                 </div>
                 {group.tasks &&
                     group.tasks.map((task) => {
+                        console.log("map running");
+
                         return (
                             <div className="task" key={task.id}>
                                 <p
@@ -280,41 +323,18 @@ export default function GroupPage() {
                                     className="fas fa-trash-alt"
                                     onClick={() => handleDeleteTask(task.id)}
                                 ></i>
-                                <input
+                                <p className="task-input">
+                                    {checkIfAssigned(task.id, "last")}
+                                </p>
+                                <p className={checkAllDone(task.id)}>
+                                    {checkIfAssigned(task.id, "now")}
+                                </p>
+                                <p
                                     className="task-input"
-                                    list="names"
-                                    type="option"
-                                    name="last"
-                                    value={checkIfAssigned(task.id, "last")}
                                     onInput={(e) => handleChange(e)}
-                                />
-                                <input
-                                    className={checkAllDone(task.id)}
-                                    list="names"
-                                    type="option"
-                                    name="now"
-                                    value={checkIfAssigned(task.id, "now")}
-                                    onInput={(e) => handleChange(e)}
-                                />
-                                <input
-                                    className="task-input"
-                                    list="names"
-                                    type="option"
-                                    name="next"
-                                    value={checkIfAssigned(task.id, "next")}
-                                    onInput={(e) => handleChange(e)}
-                                />
-                                <datalist id="names">
-                                    {members &&
-                                        members.map((member) => {
-                                            return (
-                                                <option
-                                                    value={member.username}
-                                                    key={member.user_id}
-                                                />
-                                            );
-                                        })}
-                                </datalist>
+                                >
+                                    {checkIfAssigned(task.id, "next")}
+                                </p>
                             </div>
                         );
                     })}
@@ -328,6 +348,17 @@ export default function GroupPage() {
                     name="assignmember"
                     onInput={(e) => handleChange(e)}
                 />
+                <datalist id="names">
+                    {members &&
+                        members.map((member) => {
+                            return (
+                                <option
+                                    value={member.username}
+                                    key={member.user_id}
+                                />
+                            );
+                        })}
+                </datalist>
                 <input
                     name="weekassign"
                     type="number"
@@ -353,44 +384,46 @@ export default function GroupPage() {
             </div>
 
             <h5>Assign Repeat Task</h5>
-            <input
-                className="task-input"
-                list="names"
-                type="option"
-                name="startmember"
-                placeholder="Who starts?"
-                onInput={(e) => handleChange(e)}
-            />
-            <input
-                name="weekassignrepeat"
-                type="number"
-                min="1"
-                max="52"
-                placeholder="Starting week?"
-                onChange={(e) => handleChange(e)}
-            />
-            <input
-                name="weeknrrepeat"
-                type="number"
-                min="2"
-                max="8"
-                placeholder="For how many weeks?"
-                onChange={(e) => handleChange(e)}
-            />
-            <input
-                className="task-input"
-                list="repeattasks"
-                type="option"
-                name="assigntaskrepeat"
-                onInput={(e) => handleChange(e)}
-            />
-            <datalist id="repeattasks">
-                {group.tasks &&
-                    group.tasks.map((task) => {
-                        return <option value={task.title} key={task.id} />;
-                    })}
-            </datalist>
-            <button onClick={handleNewAssignmentRepeat}>Assign</button>
+            <div className="assigntask">
+                <input
+                    className="task-input"
+                    list="names"
+                    type="option"
+                    name="startmember"
+                    placeholder="Who starts?"
+                    onInput={(e) => handleChange(e)}
+                />
+                <input
+                    name="weekassignrepeat"
+                    type="number"
+                    min="1"
+                    max="52"
+                    placeholder="Starting week?"
+                    onChange={(e) => handleChange(e)}
+                />
+                <input
+                    name="weeknrrepeat"
+                    type="number"
+                    min="2"
+                    max="8"
+                    placeholder="For how many weeks?"
+                    onChange={(e) => handleChange(e)}
+                />
+                <input
+                    className="task-input"
+                    list="repeattasks"
+                    type="option"
+                    name="assigntaskrepeat"
+                    onInput={(e) => handleChange(e)}
+                />
+                <datalist id="repeattasks">
+                    {group.tasks &&
+                        group.tasks.map((task) => {
+                            return <option value={task.title} key={task.id} />;
+                        })}
+                </datalist>
+                <button onClick={handleNewAssignmentRepeat}>Assign</button>
+            </div>
 
             <div className="adtask">
                 <h5>Ad Group Task</h5>
