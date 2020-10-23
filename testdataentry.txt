@@ -29,6 +29,8 @@ INSERT into memberships (group_id, member_id, accepted) values(2, 4, false);
 INSERT into memberships (group_id, member_id, accepted) values(3, 4, false);
 INSERT into memberships (group_id, member_id, accepted) values(1, 4, false);
 
+INSERT into memberships (group_id, member_id, accepted) values(2, 4, true);
+
 drop table tasks;
 
 

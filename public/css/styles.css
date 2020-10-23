@@ -4,6 +4,7 @@ body {
     width: 100vw;
     font-family: "Comfortaa", cursive;
     margin-top: 0;
+    overflow: hidden;
 }
 
 .input {
@@ -256,6 +257,7 @@ a:hover {
     grid-column: 3/6;
     grid-row: 2;
     margin-left: 0.5em;
+    margin-bottom: 0em;
 }
 
 .tasks {
@@ -468,6 +470,13 @@ a:hover {
     text-align: center;
 }
 
+#checkbox {
+    margin-bottom: 0;
+
+    height: 1em;
+    padding: 0;
+}
+
 .task-detail .adsubtask {
     grid-column: 1/2;
 }
@@ -476,7 +485,14 @@ a:hover {
     margin-bottom: 0.8em;
 }
 
+.task-input {
+}
+
 .sub {
+    display: inline;
+}
+
+.subtask {
     display: inline;
 }
 

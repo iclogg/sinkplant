@@ -39,6 +39,7 @@ export default function TaskPage({ taskArr, toggleTastView }) {
                                 return (
                                     <div className="subtask" key={sub.id}>
                                         <input
+                                            id="checkbox"
                                             type="checkbox"
                                             onClick={() => {
                                                 markDone(
