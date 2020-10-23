@@ -59,9 +59,12 @@ export default function Registration() {
             />
             <button onClick={submitUserData}>Register</button>
             <HashRouter>
-                <Link to="/login" className="link">
-                    Click here to login!
-                </Link>
+                <p className="linkbox" id="one">
+                    Already a signed up?&nbsp;&nbsp;
+                    <Link to="/login" className="link">
+                        Login
+                    </Link>
+                </p>
             </HashRouter>
         </div>
     );

@@ -50,16 +50,18 @@ export default function Login() {
                 placeholder="Password"
                 onChange={(e) => handleChange(e)}
             />
-            <button onClick={submitLogin}>Login</button>
-            <HashRouter>
-                <Link to="/" className="link">
-                    Click here to register!
-                </Link>
-                {/* Nice to have: */}
-                {/*    <Link to="/reset" className="link">
-                    Forgot your password?
-                </Link> */}
-            </HashRouter>
+            <button id="login" onClick={submitLogin}>
+                Login
+            </button>
+
+            <p className="linkbox" id="two">
+                New to SinkPlant?&nbsp;&nbsp;
+                <HashRouter>
+                    <Link to="/" className="link">
+                        Register
+                    </Link>
+                </HashRouter>
+            </p>
         </div>
     );
 }

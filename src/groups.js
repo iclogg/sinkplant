@@ -97,7 +97,27 @@ export default function Groups() {
                         );
                     })}
             </div>
+            <div className="adgroup">
+                <h2>Create a group</h2>
+                <input
+                    name="name"
+                    type="text"
+                    placeholder="Group Name"
+                    onChange={(e) => handleChange(e)}
+                    value={userData.name}
+                />
 
+                <input
+                    name="groupDescription"
+                    type="text"
+                    placeholder="A short description of group"
+                    onChange={(e) => handleChange(e)}
+                    value={userData.groupDescription}
+                />
+                <button id="create" onClick={handleNewGroup}>
+                    Create Group
+                </button>
+            </div>
             <div className="groups-offered">
                 <h2>Your Invitations</h2>
                 {groupsOffered &&
@@ -132,25 +152,6 @@ export default function Groups() {
                             </div>
                         );
                     })}
-            </div>
-            <div className="adgroup">
-                <h2>Create a group</h2>
-                <input
-                    name="name"
-                    type="text"
-                    placeholder="Group Name"
-                    onChange={(e) => handleChange(e)}
-                    value={userData.name}
-                />
-
-                <input
-                    name="groupDescription"
-                    type="text"
-                    placeholder="A short description of group"
-                    onChange={(e) => handleChange(e)}
-                    value={userData.groupDescription}
-                />
-                <button onClick={handleNewGroup}>Create Group</button>
             </div>
         </div>
     );

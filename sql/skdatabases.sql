@@ -59,15 +59,6 @@
     done BOOLEAN DEFAULT false
 );
 
-CREATE TABLE assignment(
-    id SERIAL PRIMARY KEY,
-    group_id INT NOT NULL REFERENCES groups(id),
-    user_id INT REFERENCES users(id) NOT NULL,
-    task_id INT NOT NULL REFERENCES tasks(id),
-    week INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    done BOOLEAN DEFAULT false
-);
 
 
 

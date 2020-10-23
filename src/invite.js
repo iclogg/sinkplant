@@ -25,7 +25,7 @@ export default function Invite({ groupId }) {
 
     return (
         <div className="invite">
-            <h3>Invite member</h3>
+            <h5>Invite a new member</h5>
             <input
                 name="pass"
                 type="email"

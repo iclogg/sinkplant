@@ -88,14 +88,14 @@ export default function GroupPage() {
                 if (group.tasks[i].subtasks) {
                     for (let j = 0; j < group.tasks[i].subtasks.length; j++) {
                         if (!group.tasks[i].subtasks[j].done) {
-                            return "task-input notdone";
+                            return "task-input notdone clickable";
                         }
                     }
                 }
             }
         }
 
-        return "task-input alldone";
+        return "task-input alldone clickable";
     };
 
     const checkIfAssigned = (taskid, week) => {
@@ -264,27 +264,29 @@ export default function GroupPage() {
 
     return (
         <div className="grouppage">
-            <h1> {group.groupname} </h1>
-            <p>{group.groupbio}</p>
-            <Invite groupId={groupId} />
-            <h3>Members of the Household:</h3>
-
-            <div className="members">
-                {members &&
-                    members.map((member) => {
-                        return (
-                            <div className="member" key={member.user_id}>
-                                <h3>{member.username}</h3>
-                            </div>
-                        );
-                    })}
+            <div id="header-box">
+                <h1> {group.groupname} </h1>
+                <p>{group.groupbio}</p>
             </div>
-            <h3>Tasks</h3>
+            <div id="members-box">
+                <h3>Members of the Household:</h3>
 
+                <div className="members">
+                    {members &&
+                        members.map((member) => {
+                            return (
+                                <div className="member" key={member.user_id}>
+                                    <h3>{member.username}</h3>
+                                </div>
+                            );
+                        })}
+                </div>
+            </div>
+            <h2 id="todo">To-Do's</h2>
             <div className="tasks">
                 <div className="weeks">
                     <h4 className="week">Last Week </h4>
-                    <h4 className="week">Current Week </h4>
+                    <h4 className="week currentweek">Current Week </h4>
                     <h4 className="week">
                         Week {assignments[0] && assignments[0].this_week + 1}
                     </h4>
@@ -304,76 +306,87 @@ export default function GroupPage() {
                         Week {assignments[0] && assignments[0].this_week + 6}
                     </h4>
                 </div>
-                {group.tasks &&
-                    group.tasks.map((task) => {
-                        return (
-                            <div className="task" key={task.id}>
-                                <h4
-                                    className="sub"
-                                    onClick={() => setTaskView(task.id)}
-                                >
-                                    {task.title}&nbsp;&nbsp;
-                                </h4>
-                                <i
-                                    className="fas fa-trash-alt"
-                                    onClick={() => handleDeleteTask(task.id)}
-                                ></i>
-                                <p className="task-input">
-                                    {checkIfAssigned(task.id, "last")}
-                                </p>
-                                <p className={checkAllDone(task.id)}>
-                                    {checkIfAssigned(task.id, "now")}
-                                </p>
-                                <p
-                                    className="task-input"
-                                    onInput={(e) => handleChange(e)}
-                                >
-                                    {checkIfAssigned(task.id, "next")}
-                                </p>
-                                <p
-                                    className="task-input"
-                                    onInput={(e) => handleChange(e)}
-                                >
-                                    {checkIfAssigned(task.id, "nextnext")}
-                                </p>
-                                <p
-                                    className="task-input"
-                                    onInput={(e) => handleChange(e)}
-                                >
-                                    {checkIfAssigned(task.id, "nextnextnext")}
-                                </p>
-                                <p
-                                    className="task-input"
-                                    onInput={(e) => handleChange(e)}
-                                >
-                                    {checkIfAssigned(
-                                        task.id,
-                                        "nextnextnextnext"
-                                    )}
-                                </p>
-                                <p
-                                    className="task-input"
-                                    onInput={(e) => handleChange(e)}
-                                >
-                                    {checkIfAssigned(
-                                        task.id,
-                                        "nextnextnextnextnext"
-                                    )}
-                                </p>
-                                <p
-                                    className="task-input"
-                                    onInput={(e) => handleChange(e)}
-                                >
-                                    {checkIfAssigned(
-                                        task.id,
-                                        "nextnextnextnextnextnext"
-                                    )}
-                                </p>
-                            </div>
-                        );
-                    })}
+
+                <div className="task-grid">
+                    {group.tasks &&
+                        group.tasks.map((task) => {
+                            return (
+                                <div className="task" key={task.id}>
+                                    <h4
+                                        className="tasktitle clickable"
+                                        onClick={() => setTaskView(task.id)}
+                                    >
+                                        {task.title}&nbsp;&nbsp;
+                                    </h4>
+                                    <i
+                                        className="fas fa-trash-alt"
+                                        onClick={() =>
+                                            handleDeleteTask(task.id)
+                                        }
+                                    ></i>
+                                    <p className="task-input">
+                                        {checkIfAssigned(task.id, "last")}
+                                    </p>
+                                    <p
+                                        className={checkAllDone(task.id)}
+                                        onClick={() => setTaskView(task.id)}
+                                    >
+                                        {checkIfAssigned(task.id, "now")}
+                                    </p>
+                                    <p
+                                        className="task-input"
+                                        onInput={(e) => handleChange(e)}
+                                    >
+                                        {checkIfAssigned(task.id, "next")}
+                                    </p>
+                                    <p
+                                        className="task-input"
+                                        onInput={(e) => handleChange(e)}
+                                    >
+                                        {checkIfAssigned(task.id, "nextnext")}
+                                    </p>
+                                    <p
+                                        className="task-input"
+                                        onInput={(e) => handleChange(e)}
+                                    >
+                                        {checkIfAssigned(
+                                            task.id,
+                                            "nextnextnext"
+                                        )}
+                                    </p>
+                                    <p
+                                        className="task-input"
+                                        onInput={(e) => handleChange(e)}
+                                    >
+                                        {checkIfAssigned(
+                                            task.id,
+                                            "nextnextnextnext"
+                                        )}
+                                    </p>
+                                    <p
+                                        className="task-input"
+                                        onInput={(e) => handleChange(e)}
+                                    >
+                                        {checkIfAssigned(
+                                            task.id,
+                                            "nextnextnextnextnext"
+                                        )}
+                                    </p>
+                                    <p
+                                        className="task-input"
+                                        onInput={(e) => handleChange(e)}
+                                    >
+                                        {checkIfAssigned(
+                                            task.id,
+                                            "nextnextnextnextnextnext"
+                                        )}
+                                    </p>
+                                </div>
+                            );
+                        })}
+                </div>
             </div>
-            <div className="assigntask">
+            <div className="assigntask single">
                 <h5>Assign Task</h5>
                 <input
                     list="names"
@@ -415,8 +428,8 @@ export default function GroupPage() {
                 <button onClick={handleNewAssignment}>Assign</button>
             </div>
 
-            <h5>Assign Repeat Task</h5>
-            <div className="assigntask">
+            <div className="assigntask repeat">
+                <h5>Assign Repeat Task</h5>
                 <input
                     list="names"
                     type="option"
@@ -437,7 +450,7 @@ export default function GroupPage() {
                     type="number"
                     min="2"
                     max="8"
-                    placeholder="For how many weeks?"
+                    placeholder="How many weeks?"
                     onChange={(e) => handleChange(e)}
                 />
                 <input
@@ -474,6 +487,7 @@ export default function GroupPage() {
                 />
                 <button onClick={handleNewTask}>Add Task</button>
             </div>
+            <Invite groupId={groupId} />
             {taskView && (
                 <TaskPage
                     taskArr={group.tasks.filter((task) => task.id == taskView)}
