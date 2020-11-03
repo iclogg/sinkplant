@@ -258,6 +258,7 @@ a:hover {
     grid-row: 2;
     margin-left: 0.5em;
     margin-bottom: 0em;
+    margin-top: 0em;
 }
 
 .tasks {
@@ -322,6 +323,7 @@ a:hover {
 
 .grouppage h1 {
     margin-top: 0;
+
     text-transform: uppercase;
 }
 

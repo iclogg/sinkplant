@@ -12,6 +12,7 @@ import {
 /* components */
 import Invite from "./invite.js";
 import TaskPage from "./taskpage.js";
+import ExampleTask from "./exampletask.js";
 import {
     markDone,
     adTask,
@@ -308,6 +309,8 @@ export default function GroupPage() {
                 </div>
 
                 <div className="task-grid">
+                    {group.tasks && group.tasks.length == 0 && <ExampleTask />}
+
                     {group.tasks &&
                         group.tasks.map((task) => {
                             return (
