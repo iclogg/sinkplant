@@ -1,8 +1,5 @@
 const spicedPg = require("spiced-pg");
-const dbUrl =
-    process.env.DATABASE_URL ||
-    "postgres:postgres:postgres@localhost:5432/sinkplant";
-
+const dbUrl = require("./db-secrets");
 const db = spicedPg(dbUrl);
 
 /* =============== Login and Registration =============== */
