@@ -191,3 +191,11 @@ export async function repeatGroupAssignment(
     console.log(dataArr);
     return dataArr;
 }
+
+export function getFutureWeek(this_week, numFutureWeek) {
+    if (this_week + numFutureWeek > 52) {
+        this_week -= 52;
+    }
+
+    return this_week + numFutureWeek;
+}

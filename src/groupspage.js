@@ -18,6 +18,7 @@ import {
     adTask,
     deleteTask,
     repeatGroupAssignment,
+    getFutureWeek,
 } from "./functions.js";
 
 export default function GroupPage() {
@@ -289,22 +290,34 @@ export default function GroupPage() {
                     <h4 className="week">Last Week </h4>
                     <h4 className="week currentweek">Current Week </h4>
                     <h4 className="week">
-                        Week {assignments[0] && assignments[0].this_week + 1}
+                        Week{" "}
+                        {assignments[0] &&
+                            getFutureWeek(assignments[0].this_week, 1)}
                     </h4>
                     <h4 className="week">
-                        Week {assignments[0] && assignments[0].this_week + 2}
+                        Week{" "}
+                        {assignments[0] &&
+                            getFutureWeek(assignments[0].this_week, 2)}
                     </h4>
                     <h4 className="week">
-                        Week {assignments[0] && assignments[0].this_week + 3}
+                        Week{" "}
+                        {assignments[0] &&
+                            getFutureWeek(assignments[0].this_week, 3)}
                     </h4>
                     <h4 className="week">
-                        Week {assignments[0] && assignments[0].this_week + 4}
+                        Week{" "}
+                        {assignments[0] &&
+                            getFutureWeek(assignments[0].this_week, 4)}
                     </h4>
                     <h4 className="week">
-                        Week {assignments[0] && assignments[0].this_week + 5}
+                        Week{" "}
+                        {assignments[0] &&
+                            getFutureWeek(assignments[0].this_week, 5)}
                     </h4>
                     <h4 className="week">
-                        Week {assignments[0] && assignments[0].this_week + 6}
+                        Week{" "}
+                        {assignments[0] &&
+                            getFutureWeek(assignments[0].this_week, 6)}
                     </h4>
                 </div>
 
