@@ -431,7 +431,6 @@ app.get("/api/currentassignments", (req, res) => {
 
     db.getCurrentWeeks(req.query.groupid)
         .then((result) => {
-            console.log("result.rows", result.rows);
             res.json(result.rows);
         })
         .catch((err) => {

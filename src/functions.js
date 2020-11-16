@@ -131,7 +131,6 @@ export async function assignTask(member_id, groupId, assigntask, weekassign) {
             weekassign,
         });
         console.log("currentassignments in functions: ", data);
-        data.this_week = 43;
         return data;
     } catch (err) {
         console.log(err);
@@ -184,8 +183,6 @@ export async function repeatGroupAssignment(
                 weekassign,
             });
 
-            data.this_week = 43;
-
             dataArr.push(data);
         } catch (err) {
             console.log(err);
@@ -193,4 +190,12 @@ export async function repeatGroupAssignment(
     }
     console.log(dataArr);
     return dataArr;
+}
+
+export function getFutureWeek(this_week, numFutureWeek) {
+    if (this_week + numFutureWeek > 52) {
+        this_week -= 52;
+    }
+
+    return this_week + numFutureWeek;
 }

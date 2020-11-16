@@ -264,11 +264,19 @@ module.exports.getCurrentWeeks = (group_id) => {
 module.exports.assignTask = (member_id, groupId, assigntask, weekassign) => {
     const q = `
         INSERT into assignment (user_id, group_id, task_id, week)
-        values($1, $2, $3, $4) RETURNING * 
+        values($1, $2, $3, $4) RETURNING *, (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week)
         `;
     const params = [member_id, groupId, assigntask, weekassign];
     return db.query(q, params);
 };
+
+/* module.export.getThisWeek = () => {
+    const q = `
+        SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week
+        `;
+    const params = [group_id];
+    return db.query(q, params);
+}; */
 
 /* module.exports.assignRepeatTask = (
     member_id,
