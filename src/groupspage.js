@@ -1,28 +1,23 @@
-import React, { useEffect, useState, useRef } from "react";
-import { socket } from "./socket.js";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+// import { socket } from "./socket.js";
+
 import {
     getGroup,
     getMembers,
     getCurrentWeeks,
     assignTask,
-} from "./functions.js";
-
-/* components */
-import Invite from "./invite.js";
-import TaskPage from "./taskpage.js";
-import ExampleTask from "./exampletask.js";
-import {
-    markDone,
     adTask,
     deleteTask,
     repeatGroupAssignment,
     getFutureWeek,
 } from "./functions.js";
 
+/* components */
+import Invite from "./invite.js";
+import TaskPage from "./taskpage.js";
+import ExampleTask from "./exampletask.js";
+
 export default function GroupPage() {
-    const [, forceUpdate] = useState();
     const [group, setGroup] = useState({});
     const [members, setMembers] = useState([]);
     const [assignments, setAssignments] = useState([]);
@@ -31,13 +26,9 @@ export default function GroupPage() {
         title: "",
         taskDescription: "",
     });
-    const [doneTasks, setdoneTasks] = useState({});
 
     const groupId = Number(window.location.pathname.slice(8));
 
-    const handleChange = (e) => {
-        setUserData({ ...userData, [e.target.name]: e.target.value });
-    };
     useEffect(() => {
         (async () => {
             setGroup(await getGroup(groupId));
@@ -46,11 +37,12 @@ export default function GroupPage() {
         })(); // end async iffie
     }, [setTaskView]);
 
-    /* useEffect(() => {
-        console.log("assignments has been updated");
-        // setTimeout(forceUpdate, 2000);
-    }, [assignments]); */
+    // handles data from inputs
+    const handleChange = (e) => {
+        setUserData({ ...userData, [e.target.name]: e.target.value });
+    };
 
+    // ads a new task to database and state
     const handleNewTask = () => {
         (async () => {
             const { title, taskDescription } = userData;
@@ -63,12 +55,10 @@ export default function GroupPage() {
         })(); // end async iffie
     };
 
+    // deletes a task from database and state
     const handleDeleteTask = (task_id) => {
         (async () => {
             await deleteTask(task_id);
-
-            // setGroup({ ...group, tasks: [...group.tasks, newTask] });
-
             setGroup({
                 ...group,
                 tasks: group.tasks.filter((task) => task.id != task_id),
@@ -76,6 +66,7 @@ export default function GroupPage() {
         })(); // end async iffie
     };
 
+    // toggles the detailed taks view. passed as props to TaskPage component
     const toggleTastView = () => {
         setTaskView(null);
         (async () => {
@@ -84,6 +75,7 @@ export default function GroupPage() {
         })();
     };
 
+    // decides color on taskgrid by checking if all subtasks of the task are done
     const checkAllDone = (task_id) => {
         for (let i = 0; i < group.tasks.length; i++) {
             if (group.tasks[i].id == task_id) {
@@ -100,6 +92,8 @@ export default function GroupPage() {
         return "task-input alldone clickable";
     };
 
+    // returns a string with name of assigned member to fields in the task grid if that slot is assigned.
+    // 'week' argument is a string describing the relation to the current week. example: last, now, next, nextnext...
     const checkIfAssigned = (taskid, week) => {
         for (let i = 0; i < assignments.length; i++) {
             if (
@@ -194,6 +188,7 @@ export default function GroupPage() {
         }
     };
 
+    // ads a new assigment to database and state
     const handleNewAssignment = () => {
         (async () => {
             const { assigntask, assignmember, weekassign } = userData;
@@ -216,6 +211,7 @@ export default function GroupPage() {
         })(); // end async iffie
     };
 
+    // ads a new assigments from repeat assignment feature to database and state
     const handleNewAssignmentRepeat = () => {
         (async () => {
             const {
@@ -228,13 +224,12 @@ export default function GroupPage() {
             const start_member_id = members.filter(
                 (mem) => mem.username == startmember
             )[0].user_id;
-            let member_id_arr = [];
 
+            let member_id_arr = [];
             for (let i = 0; i < members.length; i++) {
                 member_id_arr.push(members[i].user_id);
             }
 
-            /* nice to have logic for picking starting member */
             let secondhalf;
             for (let j = 0; j < member_id_arr.length; j++) {
                 if (member_id_arr[j] == start_member_id) {
@@ -256,8 +251,6 @@ export default function GroupPage() {
                 task_id[0].id
             );
 
-            // location.reload();
-
             setAssignments((assignments) => {
                 return [...newRepeatAssignments, ...assignments];
             });
@@ -270,6 +263,7 @@ export default function GroupPage() {
                 <h1> {group.groupname} </h1>
                 <p>{group.groupbio}</p>
             </div>
+
             <div id="members-box">
                 <h3>Members of the Household:</h3>
 
@@ -284,6 +278,7 @@ export default function GroupPage() {
                         })}
                 </div>
             </div>
+
             <h2 id="todo">To-Do's</h2>
             <div className="tasks">
                 <div className="weeks">
@@ -402,6 +397,7 @@ export default function GroupPage() {
                         })}
                 </div>
             </div>
+
             <div className="assigntask single">
                 <h5>Assign Task</h5>
                 <input
@@ -503,6 +499,7 @@ export default function GroupPage() {
                 />
                 <button onClick={handleNewTask}>Add Task</button>
             </div>
+
             <Invite groupId={groupId} />
             {taskView && (
                 <TaskPage

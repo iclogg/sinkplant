@@ -170,7 +170,6 @@ export async function repeatGroupAssignment(
                 weekassign: weekArr[i],
             },
         ];
-        /* await db.assignTask(member_id_arr[i], groupId, task_id, nr_of_weeks[i]); */
     }
     let dataArr = [];
     for (let j = 0; j < assigmentArr.length; j++) {

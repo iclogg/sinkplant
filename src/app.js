@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { adCurrentUser } from "./actions";
