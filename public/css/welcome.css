@@ -1,0 +1,41 @@
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+.welcome-wrapper,
+.welcome-intro,
+.welcome-forms {
+    height: 100vh;
+}
+
+.welcome-intro,
+.welcome-forms {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-wrapper {
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+}
+.welcome-intro {
+    width: 35%;
+    background-color: rgb(229, 231, 228);
+    font-size: 20px;
+}
+h1.welcome-intro {
+    font-weight: 200;
+}
+.welcome-forms {
+    width: 65%;
+}
+
+.github {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}

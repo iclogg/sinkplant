@@ -2,6 +2,7 @@ const spicedPg = require("spiced-pg");
 const dbUrl = require("./db-secrets");
 const db = spicedPg(dbUrl);
 
+
 /* =============== Login and Registration =============== */
 
 module.exports.addUser = (username, email, hashPw) => {

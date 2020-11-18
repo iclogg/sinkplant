@@ -8,14 +8,24 @@ export default function Welcome() {
     console.log("welcome.js");
 
     return (
-        <div className="welcome clickable" autoComplete="off">
+        <div className="welcome-wrapper" autoComplete="off">
             <HashRouter>
-                <div className="welcome-box">
-                    <h1> Welcome to SinkPlant </h1>
-                    <p> 🌱 Living together easier today. </p>
-                    <div />
-                    <Route exact path="/" component={Registration} />
-                    <Route path="/login" component={Login} />
+                <div className="welcome-intro">
+                    <h1>
+                        Living together
+                        <br /> easier today
+                    </h1>
+                </div>
+                <div className="welcome-forms">
+                    <div className="logo">sinkplant</div>
+                    <div className="forms">
+                        <Route exact path="/" component={Registration} />
+                        <Route path="/login" component={Login} />
+                    </div>
+                    <div className="github">
+                        <p>owner</p>
+                        <p>contributor</p>
+                    </div>
                 </div>
             </HashRouter>
         </div>
