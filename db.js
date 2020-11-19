@@ -181,15 +181,6 @@ module.exports.togglesubtaskdone = (task_id, done) => {
     return db.query(q, params);
 };
 
-module.exports.toggletaskdone = (task_id, done) => {
-    const q = `
-        UPDATE tasks SET done = $2
-        WHERE id = $1 
-        `;
-    const params = [task_id, !done];
-    return db.query(q, params);
-};
-
 /* ============================== Task Adding ========================== */
 
 module.exports.adSubTask = (taskdescription, group_id, task_id) => {
@@ -269,25 +260,3 @@ module.exports.assignTask = (member_id, groupId, assigntask, weekassign) => {
     const params = [member_id, groupId, assigntask, weekassign];
     return db.query(q, params);
 };
-
-/* module.export.getThisWeek = () => {
-    const q = `
-        SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week
-        `;
-    const params = [group_id];
-    return db.query(q, params);
-}; */
-
-/* module.exports.assignRepeatTask = (
-    member_id,
-    groupId,
-    assigntask,
-    nrweekassignfromnow
-) => {
-    const q = `
-        INSERT into assignment (user_id, group_id, task_id, (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + $4 ))
-        values($1, $2, $3, $4) RETURNING * 
-        `;
-    const params = [member_id, groupId, assigntask, weekassign];
-    return db.query(q, params);
-}; */
