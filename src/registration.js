@@ -57,7 +57,9 @@ export default function Registration() {
                 placeholder="Password"
                 onChange={(e) => handleChange(e)}
             />
-            <button onClick={submitUserData}>Register</button>
+            <button onClick={submitUserData} className="btn">
+                Register
+            </button>
             <HashRouter>
                 <p className="linkbox" id="one">
                     Already a signed up?&nbsp;&nbsp;
