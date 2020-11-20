@@ -2,7 +2,7 @@
     font-family: "Poppins", sans-serif;
 }
 
-.welcome-wrapper,
+.WelcomeWrapper,
 .welcome-intro,
 .welcome-forms {
     height: 100vh;
@@ -16,7 +16,7 @@
     align-items: center;
 }
 
-.welcome-wrapper {
+.WelcomeWrapper {
     width: 100vw;
     overflow: hidden;
     display: flex;
