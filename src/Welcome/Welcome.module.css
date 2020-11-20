@@ -8,7 +8,6 @@
     width: 100vw;
     overflow: hidden;
     display: flex;
-    background-color: teal;
 }
 .Form {
     background-color: pink;
@@ -25,10 +24,50 @@
 .Intro {
     width: 35%;
     background-color: rgb(229, 231, 228);
-    font-size: 20px;
 }
-h1.Intro {
-    font-weight: 200;
+.Intro h1 {
+    font-size: 35px;
+    font-weight: 600;
+    margin-top: 40px;
+    line-height: 40px;
+    align-self: start;
+    margin-left: 20%;
+}
+.Intro ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    list-style: none;
+    width: 60%;
+    gap: 40px;
+    padding: 0;
+    margin-top: -50px;
+}
+.Intro img {
+    width: 100%;
+    object-fit: contain;
+}
+.Bath,
+.Kitchen,
+.Room,
+.Bed {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.Bath {
+    padding: 45px 45px 0 5px;
+}
+.Kitchen {
+    padding: 10px 10px 0 0;
+}
+.Room {
+    padding: 30px 30px 0 0;
+}
+.LogoIntro {
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 .Forms {
     width: 65%;
