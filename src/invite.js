@@ -1,7 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { socket } from "./socket.js";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import axios from "./axios";
 
 export default function Invite({ groupId }) {

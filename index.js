@@ -83,8 +83,6 @@ app.use(function (req, res, next) {
 // ========================== Welcome ========================//
 
 app.get("/welcome", (req, res) => {
-    // req.session.userId = null; // for testing
-
     if (req.session.userId) {
         console.log("in welcome get with userid");
 
@@ -103,17 +101,13 @@ app.post("/api/register", (req, res) => {
     const { username, email, pass } = req.body.userData;
 
     if (!email || !username || !pass) {
-        console.log("if");
         res.json();
     } else {
-        console.log("else");
-
         hash(pass)
             .then((hashPass) => {
                 db.addUser(username, email, hashPass)
                     .then((result) => {
                         req.session.userId = result.rows[0].id;
-                        console.log("result.rows[0].id", result.rows[0].id);
                         result.rows[0].succsess = true;
                         res.json(result.rows[0]);
                     })
@@ -137,12 +131,10 @@ app.post("/api/login", (req, res) => {
             compare(req.body.userData.pass, result.rows[0].password)
                 .then((user) => {
                     if (user) {
-                        console.log("post login compare if user");
                         req.session.userId = result.rows[0].id;
                         result.rows[0].succsess = true;
                         res.json(result.rows[0]);
                     } else {
-                        console.log("post login compare if no user");
                         res.json();
                     }
                 })
@@ -190,8 +182,6 @@ app.get("/api/groups", (req, res) => {
 
     db.getUserGroups(req.query.groupsNrs, req.session.userId)
         .then((result) => {
-            console.log("/api/groups result.rows: ", result.rows);
-
             res.json(result.rows);
         })
         .catch((err) => {
@@ -356,25 +346,12 @@ app.post("/api/togglesubtaskdone", (req, res) => {
         });
 });
 
-app.post("/api/toggletaskdone", (req, res) => {
-    console.log("/api/toggletaskdone");
-
-    db.toggletaskdone(req.body.taskid, req.body.done)
-        .then(() => {
-            // res.json(newBtnText);
-        })
-        .catch((err) => {
-            console.log("err in dbqery in api/toggletaskdone ", err);
-        });
-});
-
 // ====================================== Task Adding  ======================================//
 app.post("/api/adSubTask/", (req, res) => {
     console.log("/api/adSubTask");
 
     db.adSubTask(req.body.taskdescription, req.body.group_id, req.body.task_id)
         .then((result) => {
-            console.log("result.rows[0]in adSubTask", result.rows[0]);
             res.json(result.rows[0]);
         })
         .catch((err) => {
@@ -387,7 +364,6 @@ app.post("/api/adTask/", (req, res) => {
 
     db.adTask(req.body.taskDescription, req.body.group_id, req.body.title)
         .then((result) => {
-            console.log("result.rows[0]in adTask", result.rows[0]);
             res.json(result.rows[0]);
         })
         .catch((err) => {
@@ -402,7 +378,6 @@ app.post("/api/deleteSubTask/", (req, res) => {
 
     db.deleteSubTask(req.body.task_id)
         .then((result) => {
-            console.log("result.rows[0]in deleteSubTask", result.rows[0]);
             res.json(result.rows[0]);
         })
         .catch((err) => {
@@ -448,7 +423,6 @@ app.post("/api/assigntask/", (req, res) => {
         req.body.weekassign
     )
         .then((result) => {
-            console.log("result.rows[0]in assigntask", result.rows[0]);
             res.json(result.rows[0]);
         })
         .catch((err) => {

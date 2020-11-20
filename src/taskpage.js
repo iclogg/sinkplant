@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
 
 import { markDone, adSubTask, deleteSubTask } from "./functions.js";
 
