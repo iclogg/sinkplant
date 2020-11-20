@@ -1,0 +1,48 @@
+/* General */
+.Wrapper,
+.Intro,
+.Forms {
+    height: 100vh;
+}
+.Wrapper {
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    background-color: teal;
+}
+.Form {
+    background-color: pink;
+}
+
+.Intro,
+.Forms {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Intro {
+    width: 35%;
+    background-color: rgb(229, 231, 228);
+    font-size: 20px;
+}
+h1.Intro {
+    font-weight: 200;
+}
+.Forms {
+    width: 65%;
+}
+
+.github {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+/* Mobile */
+@media (max-width: 599px) {
+}
+/* Desktop */
+@media (min-width: 600px) {
+}
