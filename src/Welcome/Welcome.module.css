@@ -1,35 +1,36 @@
-* {
-    font-family: "Poppins", sans-serif;
-}
-
-.WelcomeWrapper,
-.welcome-intro,
-.welcome-forms {
+/* General */
+.Wrapper,
+.Intro,
+.Forms {
     height: 100vh;
 }
+.Wrapper {
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    background-color: teal;
+}
+.Form {
+    background-color: pink;
+}
 
-.welcome-intro,
-.welcome-forms {
+.Intro,
+.Forms {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.WelcomeWrapper {
-    width: 100vw;
-    overflow: hidden;
-    display: flex;
-}
-.welcome-intro {
+.Intro {
     width: 35%;
     background-color: rgb(229, 231, 228);
     font-size: 20px;
 }
-h1.welcome-intro {
+h1.Intro {
     font-weight: 200;
 }
-.welcome-forms {
+.Forms {
     width: 65%;
 }
 
@@ -38,4 +39,10 @@ h1.welcome-intro {
     position: fixed;
     bottom: 0;
     right: 0;
+}
+/* Mobile */
+@media (max-width: 599px) {
+}
+/* Desktop */
+@media (min-width: 600px) {
 }

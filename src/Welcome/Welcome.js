@@ -11,17 +11,18 @@ export default function Welcome() {
     console.log("welcome.js");
 
     return (
-        <div className={css.WelcomeWrapper} autoComplete="off">
+        <div className={css.Wrapper} autoComplete="off">
             <HashRouter>
-                <div className="welcome-intro">
+                <div className={css.Intro}>
                     <h1>
                         Living together
                         <br /> easier today
                     </h1>
                 </div>
-                <div className="welcome-forms">
+
+                <div className={css.Forms}>
                     <div className="logo">sinkplant</div>
-                    <div className="forms">
+                    <div className={css.Form}>
                         <Route exact path="/" component={Registration} />
                         <Route path="/login" component={Login} />
                     </div>
