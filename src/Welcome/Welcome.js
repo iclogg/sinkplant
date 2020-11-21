@@ -17,7 +17,9 @@ export default function Welcome() {
         <div className={css.Wrapper} autoComplete="off">
             <HashRouter>
                 <div className={css.Intro}>
-                    <Logo css={css.LogoIntro} />
+                    <div className={css.LogoIntro}>
+                        <Logo width={80} text={false} icon={true} />
+                    </div>
                     <ul>
                         <li className={css.Bath}>
                             <img
@@ -51,7 +53,8 @@ export default function Welcome() {
                 </div>
 
                 <div className={css.Forms}>
-                    <div className="logo">sinkplant</div>
+                    <Logo width={55} text={true} icon={true} fontSize={40} />
+
                     <div className={css.Form}>
                         <Route exact path="/" component={Registration} />
                         <Route path="/login" component={Login} />

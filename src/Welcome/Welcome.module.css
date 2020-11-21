@@ -9,79 +9,79 @@
     overflow: hidden;
     display: flex;
 }
-.Form {
-    background-color: pink;
-}
-
-.Intro,
-.Forms {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.Intro {
-    width: 35%;
-    background-color: rgb(229, 231, 228);
-}
-.Intro h1 {
-    font-size: 35px;
-    font-weight: 600;
-    margin-top: 40px;
-    line-height: 40px;
-    align-self: start;
-    margin-left: 20%;
-}
-.Intro ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    list-style: none;
-    width: 60%;
-    gap: 40px;
-    padding: 0;
-    margin-top: -50px;
-}
-.Intro img {
-    width: 100%;
-    object-fit: contain;
-}
-.Bath,
-.Kitchen,
-.Room,
-.Bed {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-.Bath {
-    padding: 45px 45px 0 5px;
-}
-.Kitchen {
-    padding: 10px 10px 0 0;
-}
-.Room {
-    padding: 30px 30px 0 0;
-}
 .LogoIntro {
     position: absolute;
-    bottom: 0;
-    left: 0;
-}
-.Forms {
-    width: 65%;
-}
-
-.github {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-}
-/* Mobile */
-@media (max-width: 599px) {
+    left: 20px;
+    bottom: -10px;
 }
 /* Desktop */
 @media (min-width: 600px) {
+    .Form {
+        /* background-color: rgb(91, 30, 41); */
+    }
+
+    .Intro,
+    .Forms {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .Intro {
+        width: 35%;
+        background-color: rgb(229, 231, 228);
+    }
+    .Intro h1 {
+        font-size: 35px;
+        font-weight: 600;
+        margin-top: 40px;
+        line-height: 40px;
+        align-self: start;
+        margin-left: 20%;
+    }
+    .Intro ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        list-style: none;
+        width: 60%;
+        gap: 40px;
+        padding: 0;
+        margin-top: -50px;
+    }
+    .Intro img {
+        width: 100%;
+        object-fit: contain;
+    }
+    .Bath,
+    .Kitchen,
+    .Room,
+    .Bed {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    .Bath {
+        padding: 45px 45px 0 5px;
+    }
+    .Kitchen {
+        padding: 10px 10px 0 0;
+    }
+    .Room {
+        padding: 30px 30px 0 0;
+    }
+    .Forms {
+        width: 65%;
+    }
+
+    .github {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        right: 0;
+    }
+}
+/* Mobile */
+@media (max-width: 599px) {
 }
