@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Registration from "../registration.js";
 import Login from "../login.js";
 import Logo from "../components/Logo/Logo";
+import { FaGithub } from "react-icons/fa";
 
 // import image from "../assets/sinkplant_icons/1.png";
 
@@ -16,7 +17,7 @@ export default function Welcome() {
     return (
         <div className={css.Wrapper} autoComplete="off">
             <HashRouter>
-                <div className={css.Intro}>
+                <div className={css.IntroArea}>
                     <div className={css.LogoIntro}>
                         <Logo width={80} text={false} icon={true} />
                     </div>
@@ -52,16 +53,40 @@ export default function Welcome() {
                     </h1>
                 </div>
 
-                <div className={css.Forms}>
-                    <Logo width={55} text={true} icon={true} fontSize={40} />
+                <div className={css.FormsArea}>
+                    <div className={css.LogoWelcome}>
+                        <Logo
+                            width={55}
+                            text={true}
+                            icon={true}
+                            fontSize={40}
+                        />
+                    </div>
 
                     <div className={css.Form}>
                         <Route exact path="/" component={Registration} />
                         <Route path="/login" component={Login} />
                     </div>
-                    <div className="github">
-                        <p>owner</p>
-                        <p>contributor</p>
+                    <div className={css.Github}>
+                        <a
+                            href="https://github.com/iclogg"
+                            target="_blank"
+                            rel="noreferrer"
+                            id={css.Owner}
+                        >
+                            <FaGithub className={css.GitIcon} />
+                            <br />
+                            owner
+                        </a>
+                        <a
+                            href="https://github.com/ioanatatu"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <FaGithub className={css.GitIcon} />
+                            <br />
+                            contributor
+                        </a>
                     </div>
                 </div>
             </HashRouter>

@@ -5,10 +5,10 @@ import sinkplantLogo from "../../../public/Logo_green.png";
 */
 
 /* --- props Logo component takes ---
-1. text: true / false   -> determines whether the Logo displays the text
-2. icon: true / false   -> if no icon, then text displays final letter: "sinkplan"+icon vs "sinkplant"
-3. width: number        -> width of the div which contains the image
-4. fontSize:            -> font size of text if displayed
+1. text:        boolean     -> determines whether the Logo displays the text
+2. icon:        boolean     -> if no icon, then text displays final letter: "sinkplan"+icon vs "sinkplant"
+3. width:       number      -> width of the div which contains the image
+4. fontSize:    number      -> font size of text if displayed
 */
 
 const Logo = ({ text, icon, width, fontSize }) => {

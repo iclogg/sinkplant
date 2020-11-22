@@ -1,3 +1,9 @@
+// Styles
+import css from "./RegistrationLogin.module.css";
+
+// Components
+import Button from "./components/Button/Button";
+
 import React, { useState } from "react";
 import axios from "./axios";
 import { HashRouter, Link } from "react-router-dom";
@@ -12,6 +18,7 @@ export default function Registration() {
     };
 
     const submitUserData = () => {
+        console.log("in the async iffie");
         (async () => {
             console.log("in the async iffie");
             try {
@@ -31,7 +38,7 @@ export default function Registration() {
     };
 
     return (
-        <div className="registration-login">
+        <div className={css.RegistrationLogin}>
             {error && (
                 <div className="error">
                     Ops, something went wrong. Please check you have filled all
@@ -57,11 +64,11 @@ export default function Registration() {
                 placeholder="Password"
                 onChange={(e) => handleChange(e)}
             />
-            <button onClick={submitUserData} className="btn">
+            <Button clicked={submitUserData} type={"Normal"}>
                 Register
-            </button>
+            </Button>
             <HashRouter>
-                <p className="linkbox" id="one">
+                <p className={css.Linkbox} id="one">
                     Already a signed up?&nbsp;&nbsp;
                     <Link to="/login" className="link">
                         Login
