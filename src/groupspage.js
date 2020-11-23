@@ -221,15 +221,18 @@ export default function GroupPage() {
                 weeknrrepeat,
             } = userData;
 
+            // gets the user_id from the start-member name
             const start_member_id = members.filter(
                 (mem) => mem.username == startmember
             )[0].user_id;
 
+            // creates an array of all the groupmembers user_id
             let member_id_arr = [];
             for (let i = 0; i < members.length; i++) {
                 member_id_arr.push(members[i].user_id);
             }
 
+            // splits the array at the start member
             let secondhalf;
             for (let j = 0; j < member_id_arr.length; j++) {
                 if (member_id_arr[j] == start_member_id) {
@@ -237,12 +240,14 @@ export default function GroupPage() {
                 }
             }
 
+            // concatinates the spliced arrays of user_ids to create one with the correct order for the assignment.
             member_id_arr = [...secondhalf, ...member_id_arr];
 
             const task_id = group.tasks.filter(
                 (task) => task.title == assigntaskrepeat
             );
 
+            //creates the new assignments, sends them to the database and returns an array of the new assignments
             const newRepeatAssignments = await repeatGroupAssignment(
                 member_id_arr,
                 groupId,

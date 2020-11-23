@@ -144,16 +144,31 @@ export async function repeatGroupAssignment(
     start_week,
     task_id
 ) {
+    //makes sure we are working with numbers
     nr_of_weeks = Number(nr_of_weeks) - 1;
     start_week = Number(start_week);
 
+    //the array that will contain all the weeks in this repeat assignment
     let weekArr = [];
 
+    //adds the weeks to the array not adjusting for weeks over 52
     while (nr_of_weeks > 0) {
         weekArr.unshift(start_week + nr_of_weeks);
         nr_of_weeks--;
     }
+
+    // also ads the start week to the array
     weekArr.unshift(start_week);
+
+    //loop over the weekArr and change any week over 53 to correct week next year.
+    for (let i = 0; i < weekArr.length; i++) {
+        if (weekArr[i] > 52) {
+            weekArr[i] -= 52;
+            console.log("weekArr[i]", weekArr[i]);
+        }
+    }
+
+    // ads needed roations to the member_id_arr
     while (member_id_arr.length < weekArr.length) {
         member_id_arr.push(...member_id_arr);
     }
