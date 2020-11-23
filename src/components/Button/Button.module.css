@@ -1,0 +1,26 @@
+.Btn {
+    cursor: pointer;
+    outline: none;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 3px;
+    transition: 0.4s;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+        0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+.Normal {
+    border: 0.5px solid #009b4b;
+    background-color: #009b4b;
+}
+.Normal:hover {
+    background-color: #00b357;
+    border: 0.5px solid #007538;
+}
+.Danger {
+    border: 0.5px solid #ce1414;
+    background-color: #f52c2c;
+}
+.Danger:hover {
+    border: 0.5px solid #b80606;
+    background-color: #dc1e1e;
+}

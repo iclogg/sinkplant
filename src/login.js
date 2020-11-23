@@ -1,3 +1,9 @@
+// Styles
+import css from "./RegistrationLogin.module.css";
+
+// Components
+import Button from "./components/Button/Button";
+
 import React, { useState } from "react";
 import axios from "./axios";
 import { HashRouter } from "react-router-dom";
@@ -31,7 +37,7 @@ export default function Login() {
     };
 
     return (
-        <div className="registration-login">
+        <div className={css.RegistrationLogin}>
             {error && (
                 <div className="error">
                     Ops, something went wrong. Please check you have filled all
@@ -50,11 +56,11 @@ export default function Login() {
                 placeholder="Password"
                 onChange={(e) => handleChange(e)}
             />
-            <button id="login" onClick={submitLogin}>
+            <Button id="login" clicked={submitLogin} type={"Normal"}>
                 Login
-            </button>
+            </Button>
 
-            <p className="linkbox" id="two">
+            <p className={css.Linkbox} id="two">
                 New to SinkPlant?&nbsp;&nbsp;
                 <HashRouter>
                     <Link to="/" className="link">

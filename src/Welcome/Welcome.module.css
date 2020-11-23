@@ -1,48 +1,119 @@
 /* General */
 .Wrapper,
-.Intro,
-.Forms {
+.IntroArea,
+.FormsArea {
     height: 100vh;
+    overflow: hidden;
 }
 .Wrapper {
     width: 100vw;
     overflow: hidden;
     display: flex;
-    background-color: teal;
 }
-.Form {
-    background-color: pink;
-}
-
-.Intro,
-.Forms {
+.Github {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    font-size: 10px;
+    width: 140px;
+    justify-content: space-between;
+    text-align: center;
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
 }
-
-.Intro {
-    width: 35%;
-    background-color: rgb(229, 231, 228);
-    font-size: 20px;
+.Github > a {
+    border: 0.5px solid #d1d1d1;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: rgba(238, 238, 238, 0.041);
+    padding: 6px 5px;
+    width: 65px;
+    transition: all 0.2s;
+    color: #a0a0a0;
+    color: black;
 }
-h1.Intro {
-    font-weight: 200;
+.Github > a:hover {
+    color: black;
+    border-color: #009b4b;
+    transition: all 0.4s;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+        0 1px 3px 1px rgba(60, 64, 67, 0.15);
 }
-.Forms {
-    width: 65%;
+.GitIcon {
+    font-size: 25px;
 }
-
-.github {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-}
-/* Mobile */
-@media (max-width: 599px) {
+#Owner {
+    font-weight: 600;
 }
 /* Desktop */
 @media (min-width: 600px) {
+    .IntroArea,
+    .FormsArea {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .IntroArea {
+        width: 35%;
+        background-color: rgb(229, 231, 228);
+        position: relative;
+    }
+    .IntroArea h1 {
+        font-size: 35px;
+        font-weight: 600;
+        margin-top: 40px;
+        line-height: 40px;
+        align-self: start;
+        margin-left: 20%;
+    }
+    .IntroArea ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        list-style: none;
+        width: 60%;
+        gap: 40px;
+        padding: 0;
+        margin-top: -50px;
+    }
+    .IntroArea img {
+        width: 100%;
+        object-fit: contain;
+    }
+    .Bath,
+    .Kitchen,
+    .Room,
+    .Bed {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    .Bath {
+        padding: 35px 35px 0 5px;
+    }
+    .Kitchen {
+        padding: 10px 10px 0 0;
+    }
+    .Room {
+        padding: 30px 30px 0 0;
+    }
+    .FormsArea {
+        width: 65%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+    .LogoIntro {
+        position: absolute;
+        left: 20px;
+        bottom: -10px;
+    }
+    .LogoWelcome {
+        margin-top: 5%;
+    }
+}
+/* Mobile */
+@media (max-width: 599px) {
 }
