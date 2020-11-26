@@ -94,6 +94,7 @@ export default function GroupPage() {
 
     // returns a string with name of assigned member to fields in the task grid if that slot is assigned.
     // 'week' argument is a string describing the relation to the current week. example: last, now, next, nextnext...
+
     const checkIfAssigned = (taskid, week) => {
         for (let i = 0; i < assignments.length; i++) {
             if (
@@ -109,7 +110,8 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "last" &&
-                assignments[i].this_week - 1 == assignments[i].week
+                getFutureWeek(assignments[i].this_week, -1) ==
+                    assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -120,7 +122,8 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "next" &&
-                assignments[i].this_week + 1 == assignments[i].week
+                getFutureWeek(assignments[i].this_week, 1) ==
+                    assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -131,7 +134,8 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnext" &&
-                assignments[i].this_week + 2 == assignments[i].week
+                getFutureWeek(assignments[i].this_week, 2) ==
+                    assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -142,7 +146,8 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnext" &&
-                assignments[i].this_week + 3 == assignments[i].week
+                getFutureWeek(assignments[i].this_week, 3) ==
+                    assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -153,7 +158,8 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnextnext" &&
-                assignments[i].this_week + 4 == assignments[i].week
+                getFutureWeek(assignments[i].this_week, 4) ==
+                    assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -164,7 +170,8 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnextnextnext" &&
-                assignments[i].this_week + 5 == assignments[i].week
+                getFutureWeek(assignments[i].this_week, 5) ==
+                    assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -175,7 +182,8 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnextnextnextnext" &&
-                assignments[i].this_week + 6 == assignments[i].week
+                getFutureWeek(assignments[i].this_week, 6) ==
+                    assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {

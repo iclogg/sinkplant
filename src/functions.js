@@ -107,7 +107,6 @@ export async function getCurrentWeeks(groupid) {
         const { data } = await axios.get("/api/currentassignments", {
             params: { groupid },
         });
-        console.log("currentassignments in functions: ", data);
 
         return data;
     } catch (err) {
@@ -207,6 +206,10 @@ export async function repeatGroupAssignment(
 }
 
 export function getFutureWeek(this_week, numFutureWeek) {
+    if (this_week == 1 && numFutureWeek == -1) {
+        return 52;
+    }
+
     if (this_week + numFutureWeek > 52) {
         this_week -= 52;
     }
