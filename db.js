@@ -2,7 +2,6 @@ const spicedPg = require("spiced-pg");
 const dbUrl = process.env.DATABASE_URL || require("./db-secrets");
 const db = spicedPg(dbUrl);
 
-
 /* =============== Login and Registration =============== */
 
 module.exports.addUser = (username, email, hashPw) => {
@@ -233,10 +232,7 @@ module.exports.deleteTask = (task_id) => {
 
 // ====================================== Get Assignments  ======================================//
 
-module.exports.getCurrentWeeks = (group_id) => {
-    console.log("group_id", group_id);
-
-    const q = `
+/* const q = `
         SELECT *, (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week) from assignment 
         WHERE week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP))
         OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) - 1 )
@@ -246,6 +242,32 @@ module.exports.getCurrentWeeks = (group_id) => {
         OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 4 )
         OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 5 )
         OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 6 )
+        AND group_id = $1
+        ORDER BY id DESC;
+        `; */
+
+//DATE_ADD(DATE_ADD( <<your_date_here>> , INTERVAL 2 WEEK),INTERVAL (6-DAYOFWEEK(<<your_date_here>>)) DAY)
+//select extract (week from timestamp '2001-09-28')
+//select extract (week from timestamp (CURRENT_TIMESTAMP - INTERVAL 6 WEEK))
+//select extract (TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 6 WEEK)
+//select extract (CURRENT_TIMESTAMP + INTERVAL '23 hours')
+//select (CURRENT_TIMESTAMP + INTERVAL '336 hours')
+//(SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '23 hours')))
+//SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '1008 hours')))
+
+module.exports.getCurrentWeeks = (group_id) => {
+    console.log("group_id", group_id);
+
+    const q = `
+        SELECT *, (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week) from assignment 
+        WHERE week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '-168 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '168 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '336 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '504 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '672 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '840 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '1008 hours')))
         AND group_id = $1
         ORDER BY id DESC;
         `;

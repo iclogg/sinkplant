@@ -161,8 +161,8 @@ export async function repeatGroupAssignment(
 
     //loop over the weekArr and change any week over 53 to correct week next year.
     for (let i = 0; i < weekArr.length; i++) {
-        if (weekArr[i] > 52) {
-            weekArr[i] -= 52;
+        if (weekArr[i] > 53) {
+            weekArr[i] -= 53;
             console.log("weekArr[i]", weekArr[i]);
         }
     }
@@ -207,11 +207,11 @@ export async function repeatGroupAssignment(
 
 export function getFutureWeek(this_week, numFutureWeek) {
     if (this_week == 1 && numFutureWeek == -1) {
-        return 52;
+        return 53;
     }
 
-    if (this_week + numFutureWeek > 52) {
-        this_week -= 52;
+    if (this_week + numFutureWeek > 53) {
+        this_week -= 53;
     }
 
     return this_week + numFutureWeek;
