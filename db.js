@@ -232,48 +232,6 @@ module.exports.deleteTask = (task_id) => {
 
 // ====================================== Get Assignments  ======================================//
 
-//SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '-168 hours'))
-//SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '-168 hours'))
-//CURRENT_TIMESTAMP.YEAR-01-01
-//SELECT date_part('year', now()); gives 2020
-//select (date '2001-09-28' + interval ' 1 hour'); timestamp
-
-//select (date '(SELECT date_part('year', now()))-09-28' + interval ' 1 hour');
-//select '2020' || '-12-31' gives 2020-12-31
-//select (date     (      ( date_part('year', now())  || '-12-31') + interval ' 1 hour')  )
-// ======|timestamp|concat|===========2020=========|===concat====|===timestamp=========|==
-
-//     select (date (date_part('year', now()) + interval ' 1 hour')) error
-////select (date(( date_part('year', now()) || '-12-31') + interval '1 hour')) ERROR:  operator does not exist: text + interval
-//(select date_part('year', now()) || '1231')
-
-//select TO_DATE((date_part('year', now()) || '1231'), 'YYYYMMDD'); returns date!!!!! :D
-
-// select (date     (TO_DATE (      ( date_part('year', now()) || '1231'), 'YYYYMMDD') + interval '5 hour'))
-//======  |timestamp|date    |concat|========2020=========|===concat====|date        |===timestamp=========|==
-
-//select (date (TO_DATE (      ( date_part('year', now()) || '1231'), 'YYYYMMDD') + time '01:00:00'))
-
-//select (date (( date_part('year', now()) || '-12-31')) + time '01:00:00') SOLUTION!!!!!! gives timestamp
-
-// SELECT EXTRACT(WEEK FROM  (date (( date_part('year', now()) || '-12-31')) + time '01:00:00')); wooooorks!!!!! wohoooo
-
-// query before week of year added
-/*   const q = `
-        SELECT *, (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week) from assignment 
-        WHERE week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP))
-        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '-168 hours')))
-        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '168 hours')))
-        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '336 hours')))
-        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '504 hours')))
-        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '672 hours')))
-        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '840 hours')))
-        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '1008 hours')))
-        AND group_id = $1
-        ORDER BY id DESC;
-        `;
-    const params = [group_id]; */
-
 module.exports.getCurrentWeeks = (group_id) => {
     console.log("group_id", group_id);
 
