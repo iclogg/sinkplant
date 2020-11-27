@@ -141,7 +141,8 @@ export async function repeatGroupAssignment(
     groupId,
     nr_of_weeks,
     start_week,
-    task_id
+    task_id,
+    last_week_curr_year
 ) {
     //makes sure we are working with numbers
     nr_of_weeks = Number(nr_of_weeks) - 1;
@@ -159,10 +160,10 @@ export async function repeatGroupAssignment(
     // also ads the start week to the array
     weekArr.unshift(start_week);
 
-    //loop over the weekArr and change any week over 53 to correct week next year.
+    //loop over the weekArr and change any week over last_week_curr_year to correct week next year.
     for (let i = 0; i < weekArr.length; i++) {
-        if (weekArr[i] > 53) {
-            weekArr[i] -= 53;
+        if (weekArr[i] > last_week_curr_year) {
+            weekArr[i] -= last_week_curr_year;
             console.log("weekArr[i]", weekArr[i]);
         }
     }
@@ -205,13 +206,13 @@ export async function repeatGroupAssignment(
     return dataArr;
 }
 
-export function getFutureWeek(this_week, numFutureWeek) {
+export function getFutureWeek(this_week, numFutureWeek, last_week_curr_year) {
     if (this_week == 1 && numFutureWeek == -1) {
-        return 53;
+        return last_week_curr_year;
     }
 
-    if (this_week + numFutureWeek > 53) {
-        this_week -= 53;
+    if (this_week + numFutureWeek > last_week_curr_year) {
+        this_week -= last_week_curr_year;
     }
 
     return this_week + numFutureWeek;

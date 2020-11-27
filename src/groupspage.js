@@ -110,8 +110,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "last" &&
-                getFutureWeek(assignments[i].this_week, -1) ==
-                    assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    -1,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -122,8 +125,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "next" &&
-                getFutureWeek(assignments[i].this_week, 1) ==
-                    assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    1,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -134,8 +140,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnext" &&
-                getFutureWeek(assignments[i].this_week, 2) ==
-                    assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    2,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -146,8 +155,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnext" &&
-                getFutureWeek(assignments[i].this_week, 3) ==
-                    assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    3,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -158,8 +170,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnextnext" &&
-                getFutureWeek(assignments[i].this_week, 4) ==
-                    assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    4,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -170,8 +185,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnextnextnext" &&
-                getFutureWeek(assignments[i].this_week, 5) ==
-                    assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    5,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -182,8 +200,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnextnextnextnext" &&
-                getFutureWeek(assignments[i].this_week, 6) ==
-                    assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    6,
+                    assignments[i].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -261,7 +282,8 @@ export default function GroupPage() {
                 groupId,
                 weeknrrepeat,
                 weekassignrepeat,
-                task_id[0].id
+                task_id[0].id,
+                assignments[0].last_week_curr_year
             );
 
             setAssignments((assignments) => {
@@ -300,32 +322,56 @@ export default function GroupPage() {
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 1)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                1,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 2)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                2,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 3)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                3,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 4)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                4,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 5)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                5,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 6)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                6,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                 </div>
 
