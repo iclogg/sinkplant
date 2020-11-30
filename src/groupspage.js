@@ -94,6 +94,7 @@ export default function GroupPage() {
 
     // returns a string with name of assigned member to fields in the task grid if that slot is assigned.
     // 'week' argument is a string describing the relation to the current week. example: last, now, next, nextnext...
+
     const checkIfAssigned = (taskid, week) => {
         for (let i = 0; i < assignments.length; i++) {
             if (
@@ -109,7 +110,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "last" &&
-                assignments[i].this_week - 1 == assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    -1,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -120,7 +125,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "next" &&
-                assignments[i].this_week + 1 == assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    1,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -131,7 +140,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnext" &&
-                assignments[i].this_week + 2 == assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    2,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -142,7 +155,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnext" &&
-                assignments[i].this_week + 3 == assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    3,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -153,7 +170,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnextnext" &&
-                assignments[i].this_week + 4 == assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    4,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -164,7 +185,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnextnextnext" &&
-                assignments[i].this_week + 5 == assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    5,
+                    assignments[0].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -175,7 +200,11 @@ export default function GroupPage() {
                 }
             } else if (
                 week == "nextnextnextnextnextnext" &&
-                assignments[i].this_week + 6 == assignments[i].week
+                getFutureWeek(
+                    assignments[i].this_week,
+                    6,
+                    assignments[i].last_week_curr_year
+                ) == assignments[i].week
             ) {
                 if (assignments[i].task_id == taskid) {
                     for (let j = 0; j < members.length; j++) {
@@ -221,15 +250,18 @@ export default function GroupPage() {
                 weeknrrepeat,
             } = userData;
 
+            // gets the user_id from the start-member name
             const start_member_id = members.filter(
                 (mem) => mem.username == startmember
             )[0].user_id;
 
+            // creates an array of all the groupmembers user_id
             let member_id_arr = [];
             for (let i = 0; i < members.length; i++) {
                 member_id_arr.push(members[i].user_id);
             }
 
+            // splits the array at the start member
             let secondhalf;
             for (let j = 0; j < member_id_arr.length; j++) {
                 if (member_id_arr[j] == start_member_id) {
@@ -237,18 +269,21 @@ export default function GroupPage() {
                 }
             }
 
+            // concatinates the spliced arrays of user_ids to create one with the correct order for the assignment.
             member_id_arr = [...secondhalf, ...member_id_arr];
 
             const task_id = group.tasks.filter(
                 (task) => task.title == assigntaskrepeat
             );
 
+            //creates the new assignments, sends them to the database and returns an array of the new assignments
             const newRepeatAssignments = await repeatGroupAssignment(
                 member_id_arr,
                 groupId,
                 weeknrrepeat,
                 weekassignrepeat,
-                task_id[0].id
+                task_id[0].id,
+                assignments[0].last_week_curr_year
             );
 
             setAssignments((assignments) => {
@@ -287,32 +322,56 @@ export default function GroupPage() {
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 1)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                1,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 2)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                2,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 3)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                3,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 4)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                4,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 5)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                5,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                     <h4 className="week">
                         Week{" "}
                         {assignments[0] &&
-                            getFutureWeek(assignments[0].this_week, 6)}
+                            getFutureWeek(
+                                assignments[0].this_week,
+                                6,
+                                assignments[0].last_week_curr_year
+                            )}
                     </h4>
                 </div>
 

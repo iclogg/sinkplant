@@ -107,7 +107,6 @@ export async function getCurrentWeeks(groupid) {
         const { data } = await axios.get("/api/currentassignments", {
             params: { groupid },
         });
-        console.log("currentassignments in functions: ", data);
 
         return data;
     } catch (err) {
@@ -142,18 +141,34 @@ export async function repeatGroupAssignment(
     groupId,
     nr_of_weeks,
     start_week,
-    task_id
+    task_id,
+    last_week_curr_year
 ) {
+    //makes sure we are working with numbers
     nr_of_weeks = Number(nr_of_weeks) - 1;
     start_week = Number(start_week);
 
+    //the array that will contain all the weeks in this repeat assignment
     let weekArr = [];
 
+    //adds the weeks to the array not adjusting for weeks over 52
     while (nr_of_weeks > 0) {
         weekArr.unshift(start_week + nr_of_weeks);
         nr_of_weeks--;
     }
+
+    // also ads the start week to the array
     weekArr.unshift(start_week);
+
+    //loop over the weekArr and change any week over last_week_curr_year to correct week next year.
+    for (let i = 0; i < weekArr.length; i++) {
+        if (weekArr[i] > last_week_curr_year) {
+            weekArr[i] -= last_week_curr_year;
+            console.log("weekArr[i]", weekArr[i]);
+        }
+    }
+
+    // ads needed roations to the member_id_arr
     while (member_id_arr.length < weekArr.length) {
         member_id_arr.push(...member_id_arr);
     }
@@ -191,9 +206,13 @@ export async function repeatGroupAssignment(
     return dataArr;
 }
 
-export function getFutureWeek(this_week, numFutureWeek) {
-    if (this_week + numFutureWeek > 52) {
-        this_week -= 52;
+export function getFutureWeek(this_week, numFutureWeek, last_week_curr_year) {
+    if (this_week == 1 && numFutureWeek == -1) {
+        return last_week_curr_year;
+    }
+
+    if (this_week + numFutureWeek > last_week_curr_year) {
+        this_week -= last_week_curr_year;
     }
 
     return this_week + numFutureWeek;

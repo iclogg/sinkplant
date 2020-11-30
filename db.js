@@ -2,7 +2,6 @@ const spicedPg = require("spiced-pg");
 const dbUrl = process.env.DATABASE_URL || require("./db-secrets");
 const db = spicedPg(dbUrl);
 
-
 /* =============== Login and Registration =============== */
 
 module.exports.addUser = (username, email, hashPw) => {
@@ -237,15 +236,17 @@ module.exports.getCurrentWeeks = (group_id) => {
     console.log("group_id", group_id);
 
     const q = `
-        SELECT *, (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week) from assignment 
+        SELECT *, 
+        (SELECT EXTRACT(WEEK FROM  (date (( date_part('year', now()) || '-12-31')) + time '01:00:00')) AS last_week_curr_year) 
+        ,(SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week) from assignment 
         WHERE week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP))
-        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) - 1 )
-        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 1 )
-        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 2 )
-        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 3 )
-        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 4 )
-        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 5 )
-        OR week = (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) + 6 )
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '-168 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '168 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '336 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '504 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '672 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '840 hours')))
+        OR week = (SELECT EXTRACT(WEEK FROM (CURRENT_TIMESTAMP + INTERVAL '1008 hours')))
         AND group_id = $1
         ORDER BY id DESC;
         `;
@@ -256,7 +257,9 @@ module.exports.getCurrentWeeks = (group_id) => {
 module.exports.assignTask = (member_id, groupId, assigntask, weekassign) => {
     const q = `
         INSERT into assignment (user_id, group_id, task_id, week)
-        values($1, $2, $3, $4) RETURNING *, (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week)
+        values($1, $2, $3, $4) RETURNING * , 
+        (SELECT EXTRACT(WEEK FROM  (date (( date_part('year', now()) || '-12-31')) + time '01:00:00')) AS last_week_curr_year), 
+        (SELECT EXTRACT(WEEK FROM CURRENT_TIMESTAMP) AS this_week)
         `;
     const params = [member_id, groupId, assigntask, weekassign];
     return db.query(q, params);
