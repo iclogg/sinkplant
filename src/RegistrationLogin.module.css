@@ -4,15 +4,31 @@
     margin-top: 20%;
     align-items: center;
 }
+.RegistrationLogin input::placeholder {
+    font-size: 0.6em;
+}
 .RegistrationLogin input {
     width: 300px;
     border: none;
     height: 50px;
     border-bottom: 2px solid black;
     outline: none;
+    font-size: 1.5em;
 }
 .Linkbox {
     margin-top: 1em;
     font-size: 0.8em;
+    font-weight: 500;
     text-align: center;
+}
+
+@media (max-width: 599px) {
+    .RegistrationLogin {
+        margin-top: 10%;
+    }
+    .Linkbox {
+        font-weight: 500;
+        font-size: 1em;
+        letter-spacing: -0.05em;
+    }
 }

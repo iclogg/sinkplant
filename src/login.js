@@ -56,7 +56,12 @@ export default function Login() {
                 placeholder="Password"
                 onChange={(e) => handleChange(e)}
             />
-            <Button id="login" clicked={submitLogin} type={"Normal"}>
+            <Button
+                id="login"
+                clicked={submitLogin}
+                type={"Normal"}
+                fontSize={16}
+            >
                 Login
             </Button>
 
