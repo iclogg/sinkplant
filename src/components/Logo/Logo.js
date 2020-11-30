@@ -12,6 +12,7 @@ import sinkplantLogo from "../../../public/Logo_green.png";
 */
 
 const Logo = ({ text, icon, width, fontSize }) => {
+    // styles
     const styleLeaf = {
         width: width,
     };

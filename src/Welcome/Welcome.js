@@ -8,18 +8,30 @@ import Registration from "../registration.js";
 import Login from "../login.js";
 import Logo from "../components/Logo/Logo";
 import { FaGithub } from "react-icons/fa";
+import useViewport from "../helpers/useViewport";
 
 // import image from "../assets/sinkplant_icons/1.png";
 
 export default function Welcome() {
     console.log("welcome.js");
 
+    const { width } = useViewport();
+    console.log(width);
+    const breakpoint = 599;
+
+    const mobile = breakpoint > width;
+    console.log(mobile);
+
     return (
         <div className={css.Wrapper} autoComplete="off">
             <HashRouter>
                 <div className={css.IntroArea}>
                     <div className={css.LogoIntro}>
-                        <Logo width={80} text={false} icon={true} />
+                        <Logo
+                            width={mobile ? 230 : 80}
+                            text={false}
+                            icon={true}
+                        />
                     </div>
                     <ul>
                         <li className={css.Bath}>
@@ -56,10 +68,10 @@ export default function Welcome() {
                 <div className={css.FormsArea}>
                     <div className={css.LogoWelcome}>
                         <Logo
-                            width={55}
+                            width={mobile ? 40 : 55}
                             text={true}
                             icon={true}
-                            fontSize={40}
+                            fontSize={mobile ? 30 : 40}
                         />
                     </div>
 

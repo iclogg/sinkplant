@@ -64,12 +64,12 @@ export default function Registration() {
                 placeholder="Password"
                 onChange={(e) => handleChange(e)}
             />
-            <Button clicked={submitUserData} type={"Normal"}>
+            <Button clicked={submitUserData} type={"Normal"} fontSize={16}>
                 Register
             </Button>
             <HashRouter>
                 <p className={css.Linkbox} id="one">
-                    Already a signed up?&nbsp;&nbsp;
+                    Already signed up?&nbsp;&nbsp;
                     <Link to="/login" className="link">
                         Login
                     </Link>

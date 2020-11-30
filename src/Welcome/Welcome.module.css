@@ -1,51 +1,164 @@
 /* General */
-.Wrapper,
-.IntroArea,
-.FormsArea {
-    height: 100vh;
-    overflow: hidden;
-}
-.Wrapper {
-    width: 100vw;
-    overflow: hidden;
-    display: flex;
-}
-.Github {
-    display: flex;
-    font-size: 10px;
-    width: 140px;
-    justify-content: space-between;
-    text-align: center;
-    position: absolute;
-    bottom: 15px;
-    right: 20px;
-}
-.Github > a {
-    border: 0.5px solid #d1d1d1;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: rgba(238, 238, 238, 0.041);
-    padding: 6px 5px;
-    width: 65px;
-    transition: all 0.2s;
-    color: #a0a0a0;
-    color: black;
-}
-.Github > a:hover {
-    color: black;
-    border-color: #009b4b;
-    transition: all 0.4s;
-    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
-        0 1px 3px 1px rgba(60, 64, 67, 0.15);
-}
-.GitIcon {
-    font-size: 25px;
-}
-#Owner {
-    font-weight: 600;
+
+/* Mobile */
+@media (max-width: 599px) {
+    .Wrapper {
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        /* display: flex; */
+    }
+    .LogoWelcome {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translate(-50%);
+    }
+    .FormsArea {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+    .IntroArea {
+        width: 100%;
+        margin-top: 110px;
+        background-color: rgb(229, 231, 228);
+        padding: 25px;
+        padding-top: 5px;
+    }
+    .IntroArea ul {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        list-style: none;
+        gap: 5px;
+        padding: 0;
+    }
+    .IntroArea img {
+        width: 100%;
+        object-fit: contain;
+    }
+    .Bath,
+    .Kitchen,
+    .Room,
+    .Bed {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    .Bath {
+        padding: 35px 35px 0 5px;
+    }
+    .Kitchen {
+        padding: 10px 10px 0 0;
+    }
+    .Room {
+        padding: 30px 30px 0 0;
+    }
+    .IntroArea h1 {
+        font-size: 35px;
+        font-weight: 500;
+        margin-top: 30px;
+        margin-bottom: 0;
+        line-height: 32px;
+        text-align: center;
+    }
+    .FormsArea {
+        width: 100%;
+        /* height: 100%; */
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+    .LogoIntro {
+        position: absolute;
+        left: -40px;
+        bottom: -10px;
+        opacity: 0.2;
+    }
+    .Github {
+        display: flex;
+        font-size: 10px;
+        width: 140px;
+        justify-content: space-between;
+        text-align: center;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translate(-50%);
+    }
+    .Github > a {
+        border: 0.5px solid #d1d1d1;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: rgba(238, 238, 238, 0.041);
+        padding: 6px 5px;
+        width: 65px;
+        transition: all 0.2s;
+        color: #a0a0a0;
+        color: black;
+    }
+    .Github > a:hover {
+        color: black;
+        border-color: #009b4b;
+        transition: all 0.4s;
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+            0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    }
+    .GitIcon {
+        font-size: 25px;
+    }
+    #Owner {
+        font-weight: 600;
+    }
 }
 /* Desktop */
 @media (min-width: 600px) {
+    .Wrapper,
+    .IntroArea,
+    .FormsArea {
+        height: 100vh;
+        overflow: hidden;
+    }
+    .Wrapper {
+        width: 100vw;
+        overflow: hidden;
+        display: flex;
+    }
+    .Github {
+        display: flex;
+        font-size: 10px;
+        width: 140px;
+        justify-content: space-between;
+        text-align: center;
+        position: absolute;
+        bottom: 15px;
+        right: 20px;
+    }
+    .Github > a {
+        border: 0.5px solid #d1d1d1;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: rgba(238, 238, 238, 0.041);
+        padding: 6px 5px;
+        width: 65px;
+        transition: all 0.2s;
+        color: #a0a0a0;
+        color: black;
+    }
+    .Github > a:hover {
+        color: black;
+        border-color: #009b4b;
+        transition: all 0.4s;
+        box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.3),
+            0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    }
+    .GitIcon {
+        font-size: 25px;
+    }
+    #Owner {
+        font-weight: 600;
+    }
     .IntroArea,
     .FormsArea {
         display: flex;
@@ -113,7 +226,4 @@
     .LogoWelcome {
         margin-top: 5%;
     }
-}
-/* Mobile */
-@media (max-width: 599px) {
 }
