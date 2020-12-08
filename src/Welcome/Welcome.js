@@ -3,7 +3,6 @@ import css from "./welcome.module.css";
 
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Registration from "../registration.js";
 import Login from "../login.js";
 import Logo from "../components/Logo/Logo";
