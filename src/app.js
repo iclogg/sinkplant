@@ -6,7 +6,7 @@ import { adCurrentUser } from "./actions";
 /* components */
 import Groups from "./groups.js";
 import GroupPage from "./groupspage.js";
-import Navbar from "./navbar.js";
+import Layout from "./components/Layout/Layout";
 
 export default function App() {
     const dispatch = useDispatch();
@@ -18,13 +18,14 @@ export default function App() {
     return (
         <div className="app">
             <BrowserRouter>
-                <Navbar />
-                <Route exact path="/" render={() => <Groups />} />
-                <Route
-                    exact
-                    path="/groups/:groupId"
-                    render={() => <GroupPage />}
-                />
+                <Layout>
+                    <Route exact path="/" render={() => <Groups />} />
+                    <Route
+                        exact
+                        path="/groups/:groupId"
+                        render={() => <GroupPage />}
+                    />
+                </Layout>
             </BrowserRouter>
         </div>
     );
